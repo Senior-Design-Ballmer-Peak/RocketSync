@@ -18,7 +18,7 @@
 		5D7BC56A2B6345C300BCD340 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC5692B6345C300BCD340 /* ProfileView.swift */; };
 		5D7BC56C2B6345D700BCD340 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC56B2B6345D700BCD340 /* SettingsView.swift */; };
 		5D7BC56E2B63461D00BCD340 /* DistanceMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */; };
-		5D7BC5702B6348A100BCD340 /* PostsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC56F2B6348A100BCD340 /* PostsList.swift */; };
+		5D7BC5722B63493A00BCD340 /* PostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC5712B63493A00BCD340 /* PostsListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		5D7BC5692B6345C300BCD340 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5D7BC56B2B6345D700BCD340 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceMeasure.swift; sourceTree = "<group>"; };
-		5D7BC56F2B6348A100BCD340 /* PostsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsList.swift; sourceTree = "<group>"; };
+		5D7BC5712B63493A00BCD340 /* PostsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 				5D7BC5692B6345C300BCD340 /* ProfileView.swift */,
 				5D7BC56B2B6345D700BCD340 /* SettingsView.swift */,
 				5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */,
-				5D7BC56F2B6348A100BCD340 /* PostsList.swift */,
+				5D7BC5712B63493A00BCD340 /* PostsListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,8 +304,8 @@
 				5D7BC56E2B63461D00BCD340 /* DistanceMeasure.swift in Sources */,
 				5D7BC56A2B6345C300BCD340 /* ProfileView.swift in Sources */,
 				5D7BC53B2B6344DD00BCD340 /* AppView.swift in Sources */,
-				5D7BC5702B6348A100BCD340 /* PostsList.swift in Sources */,
 				5D7BC53D2B6344DD00BCD340 /* Item.swift in Sources */,
+				5D7BC5722B63493A00BCD340 /* PostsListView.swift in Sources */,
 				5D7BC5392B6344DD00BCD340 /* RocketSyncApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

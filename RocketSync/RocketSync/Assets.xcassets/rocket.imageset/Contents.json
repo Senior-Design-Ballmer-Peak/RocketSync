@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "250px-JMS_0067Crop.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "250px-JMS_0067Crop 1.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "250px-JMS_0067Crop 2.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

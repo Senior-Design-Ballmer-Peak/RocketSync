@@ -24,7 +24,7 @@ struct AppView: View {
             }
             
             TabView(selection: $selection) {
-                PostTableView().tabItem { Text("Social Tab") }.tag(0)
+                PostListView().tabItem { Text("Social Tab") }.tag(0)
                 DistanceMeasureView().tabItem { Text("GPS Tab") }.tag(1)
                 Text("Launch").tabItem { Text("Launch Tab") }.tag(2)
                 Text("Profile").tabItem { Text("Profile Tab") }.tag(3)

@@ -64,7 +64,7 @@ struct CustomPostCell: View {
     }
 }
 
-struct PostTableView: View {
+struct PostListView: View {
     @State private var selectedOptions: Set<String> = ["Launch", "Post", "Question", "Design"]
     
     let posts = [
@@ -118,5 +118,5 @@ struct PostTableView: View {
 }
 
 #Preview {
-    PostTableView()
+    PostListView()
 }
