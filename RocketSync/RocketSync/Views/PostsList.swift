@@ -87,7 +87,7 @@ struct PostTableView: View {
                         } else {
                             selectedOptions.insert(option)
                         }
-                    }) { 
+                    }) {
                         HStack {
                             Text(option)
                             Spacer()
