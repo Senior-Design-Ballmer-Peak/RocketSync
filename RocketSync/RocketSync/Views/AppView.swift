@@ -26,8 +26,8 @@ struct AppView: View {
             TabView(selection: $selection) {
                 PostListView().tabItem { Text("Social Tab") }.tag(0)
                 DistanceMeasureView().tabItem { Text("GPS Tab") }.tag(1)
-                Text("Launch").tabItem { Text("Launch Tab") }.tag(2)
-                Text("Profile").tabItem { Text("Profile Tab") }.tag(3)
+                DeviceConnectionView().tabItem { Text("Launch Tab") }.tag(2)
+                ProfileView().tabItem { Text("Profile Tab") }.tag(3)
                 SettingsView().tabItem { Text("Settings Tab") }.tag(4)
             }
             .overlay(
