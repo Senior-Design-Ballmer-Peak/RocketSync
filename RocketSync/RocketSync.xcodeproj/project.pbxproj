@@ -19,6 +19,7 @@
 		5D7BC56C2B6345D700BCD340 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC56B2B6345D700BCD340 /* SettingsView.swift */; };
 		5D7BC56E2B63461D00BCD340 /* DistanceMeasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */; };
 		5D7BC5722B63493A00BCD340 /* PostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC5712B63493A00BCD340 /* PostsListView.swift */; };
+		5D7BC5742B66F0EA00BCD340 /* DeviceConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7BC5732B66F0EA00BCD340 /* DeviceConnectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		5D7BC56B2B6345D700BCD340 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceMeasure.swift; sourceTree = "<group>"; };
 		5D7BC5712B63493A00BCD340 /* PostsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListView.swift; sourceTree = "<group>"; };
+		5D7BC5732B66F0EA00BCD340 /* DeviceConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				5D7BC56B2B6345D700BCD340 /* SettingsView.swift */,
 				5D7BC56D2B63461D00BCD340 /* DistanceMeasure.swift */,
 				5D7BC5712B63493A00BCD340 /* PostsListView.swift */,
+				5D7BC5732B66F0EA00BCD340 /* DeviceConnectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D7BC5742B66F0EA00BCD340 /* DeviceConnectionView.swift in Sources */,
 				5D7BC56C2B6345D700BCD340 /* SettingsView.swift in Sources */,
 				5D7BC56E2B63461D00BCD340 /* DistanceMeasure.swift in Sources */,
 				5D7BC56A2B6345C300BCD340 /* ProfileView.swift in Sources */,
@@ -475,6 +479,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RocketSync/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow for use of bluetooth.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth for discovering peripherals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -506,6 +512,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RocketSync/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow for use of bluetooth.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth for discovering peripherals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
