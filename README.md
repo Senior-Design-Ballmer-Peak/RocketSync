@@ -6,3 +6,5 @@ Live Telemetry: Get real-time data during your rocket's flight, including altitu
 Social Media Integration: Share your launches and achievements with the model rocket community directly through the app.
 Post-Flight Analytics: Analyze your flight data with our comprehensive analytics tools, helping you understand your rocket's performance and how to improve it.
 Community Features: Join groups, participate in discussions, and connect with other rocket enthusiasts.
+
+
