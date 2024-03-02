@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  RocketSync
 //
-//  Created by Trey Eckenrod on 1/18/24.
+//  Created by Trey Eckenrod on 2/26/24.
 //
 
 import SwiftUI
@@ -53,7 +53,6 @@ struct SettingsView: View {
                 
             }.padding(.all)
         }
-        Spacer()
     }
 }
 
