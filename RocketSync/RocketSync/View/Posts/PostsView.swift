@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct PostsView: View {
-    @Environment(\.modelContext) private var modelContext
-//    @Query private var posts: [Post]
     @State private var titleAppears = false
     
     private let animation = Animation.bouncy(duration: 2)
@@ -122,5 +119,4 @@ struct PostsView: View {
 
 #Preview {
     PostsView()
-        .modelContainer(for: Post.self, inMemory: true)
 }

@@ -104,10 +104,10 @@ struct CreatePostView: View {
             do {
                 if postType == PostType.post {
                     if let photo = postPhoto {
-                        try? Post(title: postTitle, type: postType.rawValue, username: postUsername, photo: photo).modelContext?.save()
+                        try? Post(title: postTitle, type: postType.rawValue, username: postUsername, photo: photo)
                     }
                 } else {
-                    try Post(title: postTitle, type: postType.rawValue, username: postUsername).modelContext?.save()
+                    try Post(title: postTitle, type: postType.rawValue, username: postUsername)
                 }
             } catch {
                 print("Post not saved")

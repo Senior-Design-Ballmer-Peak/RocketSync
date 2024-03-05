@@ -6,10 +6,17 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
-class Post: Identifiable {
+struct Post: Hashable, Identifiable {
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        if lhs.id == rhs.id {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var id: String
     var title: String
     var type: String

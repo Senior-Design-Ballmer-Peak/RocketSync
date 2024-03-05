@@ -6,27 +6,20 @@
 //
 
 import SwiftUI
-import SwiftData
+import Firebase
 
 @main
 struct RocketSyncApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Post.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @StateObject var authModel = AuthenticationModel()
+    
+    init() {
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {
-            PostsView()
+            ContentView()
+                .environmentObject(authModel)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

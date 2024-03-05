@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @State private var darkMode = false
     @State private var notifications = false
+    @EnvironmentObject var authModel: AuthenticationModel
     
     var body: some View {
         VStack {
@@ -19,17 +20,12 @@ struct SettingsView: View {
             Spacer()
             
             HStack {
-                Image(systemName: "person.crop.rectangle")
-                Text("Sign In")
-                Spacer()
-                Image(systemName: "chevron.right")
-            }.padding(.all)
-            
-            HStack {
-                Image(systemName: "lock.fill")
-                Text("Sign Out")
-                Spacer()
-                Image(systemName: "chevron.right")
+                Button(action: authModel.signOut) {
+                    Image(systemName: "lock.fill")
+                    Text("Sign Out")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
             }.padding(.all)
             
             HStack {
