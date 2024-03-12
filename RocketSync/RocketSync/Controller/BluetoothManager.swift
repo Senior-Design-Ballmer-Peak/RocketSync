@@ -24,4 +24,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             // Handle the case where Bluetooth is not available
         }
     }
+
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        if !discoveredPeripherals.contains(peripheral) {
+            discoveredPeripherals.append(peripheral)
+        }
+    }
 }
