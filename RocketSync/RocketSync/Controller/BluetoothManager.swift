@@ -12,4 +12,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     @Published var discoveredPeripherals = [CBPeripheral]()
     @Published var receivedData = ""
 
+    override init() {
+        super.init()
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+    }
 }
