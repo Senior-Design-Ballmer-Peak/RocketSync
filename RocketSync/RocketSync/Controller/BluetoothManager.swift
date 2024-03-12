@@ -1,5 +1,6 @@
 //
 //  BluetoothManager.swift
+//  RocketSync
 //
 //  Created by Charles Wilmot on 3/12/24.
 //
@@ -58,7 +59,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         }
     }
 
-     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if characteristic.uuid == CBUUID(string: "FF01"), let value = characteristic.value {
             // Convert data to a string using UTF-8 encoding
             if let string = String(data: value, encoding: .utf8) {
@@ -69,7 +71,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         }
     }
 
-     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("Error enabling notifications: \(error.localizedDescription)")
             return
