@@ -30,4 +30,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             discoveredPeripherals.append(peripheral)
         }
     }
+
+    func connect(to peripheral: CBPeripheral) {
+        centralManager.stopScan()
+        centralManager.connect(peripheral, options: nil)
+        peripheral.delegate = self
+    }
 }
