@@ -47,4 +47,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
+
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard let characteristics = service.characteristics else { return }
+        for characteristic in characteristics {
+            if characteristic.uuid == CBUUID(string: "FF01") { // Assuming FF01 is the characteristic you're interested in
+                // Enable notifications for this characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
+            }
+        }
+    }
 }
