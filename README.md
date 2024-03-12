@@ -43,3 +43,5 @@ RocketSync is available under the MIT license. Full license details can be found
 ---
 
 RocketSync is more than just an app; it's a gateway to a richer model rocketry experience. By connecting your rocket and ground station to your iOS device, RocketSync brings you closer to the action, enriches your understanding of each flight, and connects you with a global community of enthusiasts. Ready for lift-off? Download RocketSync today and transform your model rocket launches into unforgettable experiences.
+
+
