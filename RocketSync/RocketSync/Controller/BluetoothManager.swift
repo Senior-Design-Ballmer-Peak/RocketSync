@@ -16,4 +16,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
+
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == .poweredOn {
+            centralManager.scanForPeripherals(withServices: nil, options: nil)
+        } else {
+            // Handle the case where Bluetooth is not available
+        }
+    }
 }
