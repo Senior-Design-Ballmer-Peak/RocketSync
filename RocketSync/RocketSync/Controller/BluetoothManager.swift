@@ -57,4 +57,15 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             }
         }
     }
+
+     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if characteristic.uuid == CBUUID(string: "FF01"), let value = characteristic.value {
+            // Convert data to a string using UTF-8 encoding
+            if let string = String(data: value, encoding: .utf8) {
+                receivedData = string
+            } else {
+                print("Received an invalid UTF-8 sequence.")
+            }
+        }
+    }
 }
