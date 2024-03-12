@@ -68,4 +68,18 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             }
         }
     }
+
+     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        if let error = error {
+            print("Error enabling notifications: \(error.localizedDescription)")
+            return
+        }
+
+        if characteristic.isNotifying {
+            print("Notifications started for \(characteristic.uuid)")
+        } else {
+            print("Notifications stopped for \(characteristic.uuid). Disconnecting")
+            centralManager.cancelPeripheralConnection(peripheral)
+        }
+    }
 }
