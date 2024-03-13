@@ -19,7 +19,7 @@ struct PostDetailView: View {
                     .foregroundColor(Color("TextColor"))
                     .padding(.leading)
                 
-                Text(post.username)
+                Text(post.user)
                     .foregroundColor(Color("TextColor"))
                 
                 Spacer()
@@ -87,5 +87,5 @@ struct PostDetailView: View {
 }
 
 #Preview {
-    PostDetailView(post: Post(title: "Preview", type: "Design", username: "teckenrod"))
+    PostDetailView(post: Post(id: "", title: "Preview", type: "Design", user: "teckenrod"))
 }

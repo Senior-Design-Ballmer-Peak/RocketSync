@@ -12,7 +12,7 @@ import SwiftData
 struct CreatePostView: View {
     @State private var postTitle: String = ""
     @State private var postType: PostType = .post
-    @State private var postUsername: String = ""
+    @State private var postUser: String = ""
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var postPhoto: Data?
     
@@ -48,7 +48,7 @@ struct CreatePostView: View {
                 
                 Spacer()
                 
-                TextField("Enter Username", text: $postUsername)
+                TextField("Enter Username", text: $postUser)
             }
             
             HStack {
@@ -84,10 +84,10 @@ struct CreatePostView: View {
             }
             
             if let postPhoto {
-                PostDetailView(post: Post(title: postTitle, type: postType.rawValue.capitalized, username: postUsername, photo: postPhoto))
+                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: postUser))
                     .padding(.all)
             } else {
-                PostDetailView(post: Post(title: postTitle, type: postType.rawValue.capitalized, username: postUsername))
+                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: postUser))
                     .padding(.all)
             }
             
@@ -101,24 +101,13 @@ struct CreatePostView: View {
         }
         
         Button {
-            do {
-                if postType == PostType.post {
-                    if let photo = postPhoto {
-                        try? Post(title: postTitle, type: postType.rawValue, username: postUsername, photo: photo)
-                    }
-                } else {
-                    try Post(title: postTitle, type: postType.rawValue, username: postUsername)
-                }
-            } catch {
-                print("Post not saved")
-            }
+            PostsController().addPost(title: postTitle, type: postType.rawValue, user: postUser)
         } label: {
             Image(systemName: "plus.rectangle")
                 .resizable()
                 .foregroundColor(Color("TextColor"))
                 .scaledToFit()
                 .frame(height: 50)
-                
         }
 
     }

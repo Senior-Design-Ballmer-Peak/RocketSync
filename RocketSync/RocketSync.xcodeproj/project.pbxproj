@@ -40,7 +40,6 @@
 		5D3833D52B96998B00E3CDB9 /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3833D42B96998B00E3CDB9 /* AuthenticationModel.swift */; };
 		5D3833D82B969A3A00E3CDB9 /* LoginOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3833D72B969A3A00E3CDB9 /* LoginOptions.swift */; };
 		5D3833DA2B96ADDD00E3CDB9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3833D92B96ADDD00E3CDB9 /* ContentView.swift */; };
-		5D3833DE2B96B68D00E3CDB9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D3833DD2B96B68D00E3CDB9 /* GoogleService-Info.plist */; };
 		5D5813C42B8D240A00B8CEF6 /* RocketSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5813C32B8D240A00B8CEF6 /* RocketSyncApp.swift */; };
 		5D5813C62B8D240A00B8CEF6 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5813C52B8D240A00B8CEF6 /* PostsView.swift */; };
 		5D5813C82B8D240A00B8CEF6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5813C72B8D240A00B8CEF6 /* Post.swift */; };
@@ -53,6 +52,8 @@
 		5D58141B2B8D8C0B00B8CEF6 /* DeviceConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D58141A2B8D8C0B00B8CEF6 /* DeviceConnectionView.swift */; };
 		5D58141D2B8D8C3A00B8CEF6 /* DistanceMeasureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D58141C2B8D8C3A00B8CEF6 /* DistanceMeasureView.swift */; };
 		5D5814212B8D949A00B8CEF6 /* DistanceMeasureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5814202B8D949A00B8CEF6 /* DistanceMeasureViewModel.swift */; };
+		5DB691B42BA1FE2C00981D5F /* PostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB691B32BA1FE2C00981D5F /* PostsController.swift */; };
+		5DB691B62BA20C6200981D5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DB691B52BA20C6200981D5F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +61,6 @@
 		5D3833D42B96998B00E3CDB9 /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
 		5D3833D72B969A3A00E3CDB9 /* LoginOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOptions.swift; sourceTree = "<group>"; };
 		5D3833D92B96ADDD00E3CDB9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		5D3833DD2B96B68D00E3CDB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "RocketSync/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D5813C02B8D240A00B8CEF6 /* RocketSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RocketSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5813C32B8D240A00B8CEF6 /* RocketSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketSyncApp.swift; sourceTree = "<group>"; };
 		5D5813C52B8D240A00B8CEF6 /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
@@ -76,6 +76,8 @@
 		5D58141A2B8D8C0B00B8CEF6 /* DeviceConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionView.swift; sourceTree = "<group>"; };
 		5D58141C2B8D8C3A00B8CEF6 /* DistanceMeasureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceMeasureView.swift; sourceTree = "<group>"; };
 		5D5814202B8D949A00B8CEF6 /* DistanceMeasureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceMeasureViewModel.swift; sourceTree = "<group>"; };
+		5DB691B32BA1FE2C00981D5F /* PostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsController.swift; sourceTree = "<group>"; };
+		5DB691B52BA20C6200981D5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +140,7 @@
 		5D5813B72B8D240A00B8CEF6 = {
 			isa = PBXGroup;
 			children = (
-				5D3833DD2B96B68D00E3CDB9 /* GoogleService-Info.plist */,
+				5DB691B52BA20C6200981D5F /* GoogleService-Info.plist */,
 				5D5813C22B8D240A00B8CEF6 /* RocketSync */,
 				5D5813C12B8D240A00B8CEF6 /* Products */,
 			);
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5813C32B8D240A00B8CEF6 /* RocketSyncApp.swift */,
+				5DB691B32BA1FE2C00981D5F /* PostsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -318,8 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D5813CD2B8D240D00B8CEF6 /* Preview Assets.xcassets in Resources */,
+				5DB691B62BA20C6200981D5F /* GoogleService-Info.plist in Resources */,
 				5D5813CA2B8D240D00B8CEF6 /* Assets.xcassets in Resources */,
-				5D3833DE2B96B68D00E3CDB9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +342,7 @@
 				5D5814172B8D549C00B8CEF6 /* CreatePostView.swift in Sources */,
 				5D3833C62B956A8000E3CDB9 /* LoginView.swift in Sources */,
 				5D5813C82B8D240A00B8CEF6 /* Post.swift in Sources */,
+				5DB691B42BA1FE2C00981D5F /* PostsController.swift in Sources */,
 				5D5813C42B8D240A00B8CEF6 /* RocketSyncApp.swift in Sources */,
 				5D58141D2B8D8C3A00B8CEF6 /* DistanceMeasureView.swift in Sources */,
 				5D3833D52B96998B00E3CDB9 /* AuthenticationModel.swift in Sources */,
@@ -484,7 +488,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RocketSync/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow for use of GPS measuring.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -518,7 +521,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RocketSync/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow for use of GPS measuring.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
