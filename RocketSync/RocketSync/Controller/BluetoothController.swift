@@ -1,8 +1,8 @@
 //
-//  BluetoothManager.swift
+//  BluetoothController.swift
 //  RocketSync
 //
-//  Created by Charles Wilmot on 3/12/24.
+//  Created by Trey Eckenrod on 3/14/24.
 //
 
 import Foundation
