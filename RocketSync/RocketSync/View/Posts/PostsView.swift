@@ -12,7 +12,13 @@ struct PostsView: View {
     
     private let animation = Animation.bouncy(duration: 2)
     
-    let posts: [Post] = PostsController().getPosts()
+//    let posts: [Post] = PostsController().getPosts()
+    let posts = [
+        Post(id: "1", title: "Test Launch 1", type: "Launch", user: "teckenrod"),
+        Post(id: "2", title: "Test Launch 2", type: "Question", user: "cwilmot"),
+        Post(id: "3", title: "Test Launch 3", type: "Post", user: "tpawlenty"),
+        Post(id: "4", title: "Test Launch 4", type: "Design", user: "mmenster")
+    ]
     
     var body: some View {
         NavigationStack {
