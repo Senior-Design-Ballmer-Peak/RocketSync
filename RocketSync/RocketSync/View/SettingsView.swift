@@ -20,13 +20,16 @@ struct SettingsView: View {
             Spacer()
             
             HStack {
-                Button(action: authModel.signOut) {
+                Button(action: {
+                    authModel.signOut()
+                }, label: {
                     Image(systemName: "lock.fill")
                     Text("Sign Out")
                     Spacer()
                     Image(systemName: "chevron.right")
-                }
-            }.padding(.all)
+                })
+                .padding(.all)
+            }
             
             HStack {
                 Image(systemName: "key.fill")
