@@ -102,6 +102,7 @@ struct CreatePostView: View {
         
         Button {
             PostsController().addPost(title: postTitle, type: postType.rawValue, user: postUser)
+            
         } label: {
             Image(systemName: "plus.rectangle")
                 .resizable()
