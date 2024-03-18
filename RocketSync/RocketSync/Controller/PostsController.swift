@@ -23,9 +23,9 @@ class PostsController {
                 if let snapshotDocs = querySnapshot?.documents {
                     for doc in snapshotDocs {
                         let data = doc.data()
-                        if let postTitle = data[""] as? String,
-                           let postType = data[""] as? String,
-                           let postUser = data[""] as? String {
+                        if let postTitle = data["title"] as? String,
+                           let postType = data["type"] as? String,
+                           let postUser = data["user"] as? String {
                             let newPost = Post(id: doc.documentID, title: postTitle, type: postType, user: postUser)
                             self.posts.append(newPost)
                         }
