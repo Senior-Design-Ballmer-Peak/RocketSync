@@ -8,7 +8,7 @@
 import Foundation
 import CoreBluetooth
 
-class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var centralManager: CBCentralManager!
     @Published var discoveredPeripherals = [CBPeripheral]()
     @Published var receivedData = ""
