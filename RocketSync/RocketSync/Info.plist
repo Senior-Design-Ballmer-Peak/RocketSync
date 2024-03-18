@@ -17,9 +17,5 @@
 	</array>
 	<key>GIDClientID</key>
 	<string>534817191785-dklc2sijvhap03ph7s76jr0ljg9pq4ef.apps.googleusercontent.com</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-	</array>
 </dict>
 </plist>
