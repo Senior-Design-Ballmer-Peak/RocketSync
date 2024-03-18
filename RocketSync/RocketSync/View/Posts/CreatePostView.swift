@@ -83,7 +83,7 @@ struct CreatePostView: View {
                 Spacer()
             }
             
-            if let postPhoto {
+            if postPhoto != nil {
                 PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: postUser))
                     .padding(.all)
             } else {
