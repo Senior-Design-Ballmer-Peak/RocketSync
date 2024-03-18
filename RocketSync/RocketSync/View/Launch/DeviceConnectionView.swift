@@ -14,16 +14,16 @@ struct DeviceConnectionView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
-                    NavigationLink(value: peripheral) {
-                        Text(peripheral.name ?? "Unknown")
+            List(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
+                Section {
+                    if peripheral.name == "L-TAS" {
+                        NavigationLink(destination: DeviceDetailView(bluetoothManager: bluetoothManager, peripheral: peripheral)) {
+                            Text(peripheral.name ?? "Unknown")
+                                .bold()
+                        }
                     }
                 }
-            }
-            .navigationTitle("Discovered Devices")
-            .navigationDestination(for: CBPeripheral.self) { peripheral in
-                DeviceDetailView(bluetoothManager: bluetoothManager, peripheral: peripheral)
+                .listRowBackground(Color.blue.opacity(0.1))
             }
         }
         
