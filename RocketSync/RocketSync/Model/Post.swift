@@ -14,4 +14,7 @@ struct Post: Identifiable, Hashable {
     var type: String
     var photo: Data?
     var user: String
+    var likes: Int
+    var commentText: [String]
+    var commentUsers: [String]
 }
