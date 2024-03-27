@@ -9,28 +9,35 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
-class PostsController {
+class PostsController: ObservableObject {
     let db = Firestore.firestore()
-    var posts: [Post] = []
+    @Published var posts: [Post] = []
+    @Published var error: Error?
     
-    func loadPosts() {
+    func getPosts() {
         db.collection("Posts").order(by: "type").addSnapshotListener { (querySnapshot, error) in
-            self.posts = []
-            
             if let e = error {
+                self.error = e
                 print("Error loading posts: \(e)")
-            } else {
-                if let snapshotDocs = querySnapshot?.documents {
-                    for doc in snapshotDocs {
-                        let data = doc.data()
-                        if let postTitle = data["title"] as? String,
-                           let postType = data["type"] as? String,
-                           let postUser = data["user"] as? String {
-                            let newPost = Post(id: doc.documentID, title: postTitle, type: postType, user: postUser)
-                            self.posts.append(newPost)
-                        }
+                return
+            }
+            
+            var fetchedPosts: [Post] = []
+            
+            if let snapshotDocs = querySnapshot?.documents {
+                for doc in snapshotDocs {
+                    let data = doc.data()
+                    if let postTitle = data["title"] as? String,
+                       let postType = data["type"] as? String,
+                       let postUser = data["user"] as? String,
+                       let postLikes = data["likes"] as? Int,
+                       let postCommentText = data["commentText"] as? [String],
+                       let postCommentUsers = data["commentUsers"] as? [String] {
+                        let newPost = Post(id: doc.documentID, title: postTitle, type: postType, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                        fetchedPosts.append(newPost)
                     }
                 }
+                self.posts = fetchedPosts
             }
         }
     }
@@ -39,7 +46,10 @@ class PostsController {
         let doc: [String: Any] = [
             "title": title,
             "type": type,
-            "user": user
+            "user": user,
+            "likes": 0,
+            "commentText": [],
+            "commentUsers": []
         ]
         
         db.collection("Posts").addDocument(data: doc) { err in
@@ -51,8 +61,7 @@ class PostsController {
         }
     }
     
-    func getPosts() -> [Post] {
-        loadPosts()
-        return posts
+    func addLike(post: Post) {
+        
     }
 }
