@@ -12,6 +12,8 @@ struct ProfileView: View {
     @State var selection : Int = 0
     
     var body: some View {
+        BaseView(selectedTab: 3)
+        
         VStack {
             if selection == 0 {
                 HStack {
@@ -140,78 +142,6 @@ struct ProfileView: View {
 
             
         })
-        
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                HStack {
-                    Image(systemName: "location.north")
-                        .foregroundColor(Color("TextColor"))
-                    
-                    Text("RocketSync")
-                        .font(.title)
-                        .fontWidth(.expanded)
-                        .foregroundColor(Color("TextColor"))
-                }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gear")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Color("TextColor"))
-                }
-            }
-            
-            ToolbarItemGroup(placement: .bottomBar) {
-                
-                Spacer()
-                
-                NavigationLink(destination: PostsView()) {
-                    Image(systemName: "aqi.medium")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(Color("TextColor"))
-                        .opacity(0.4)
-                }
-                
-                Spacer()
-                
-                NavigationLink(destination: DistanceMeasureView()) {
-                    Image(systemName: "scope")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(Color("TextColor"))
-                        .opacity(0.4)
-                }
-                    
-                Spacer()
-                
-                NavigationLink(destination: DeviceConnectionView()) {
-                    Image(systemName: "location.north.line.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(Color("TextColor"))
-                        .opacity(0.4)
-                }
-                
-                Spacer()
-                
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .opacity(1)
-                
-                Spacer()
-            }
-        }
-        .tint(Color("TextColor"))
-        .navigationBarBackButtonHidden(true)
     }
 }
 
