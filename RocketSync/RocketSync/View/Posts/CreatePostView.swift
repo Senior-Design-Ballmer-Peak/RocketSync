@@ -8,11 +8,11 @@
 import SwiftUI
 import PhotosUI
 import SwiftData
+import FirebaseAuth
 
 struct CreatePostView: View {
     @State private var postTitle: String = ""
     @State private var postType: PostType = .post
-    @State private var postUser: String = ""
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var postPhoto: Data?
     
@@ -35,20 +35,6 @@ struct CreatePostView: View {
                 Spacer()
                 
                 TextField("Enter Title", text: $postTitle)
-            }
-            
-            HStack {
-                Image(systemName: "person.circle")
-                    .padding(.leading)
-                    .foregroundColor(Color("TextColor"))
-
-                Text("Username: ")
-                    .frame(width: 150, alignment: .leading)
-                    .foregroundColor(Color("TextColor"))
-                
-                Spacer()
-                
-                TextField("Enter Username", text: $postUser)
             }
             
             HStack {
@@ -83,13 +69,13 @@ struct CreatePostView: View {
                 Spacer()
             }
             
-            if postPhoto != nil {
-                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: postUser))
-                    .padding(.all)
-            } else {
-                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: postUser))
-                    .padding(.all)
-            }
+//            if postPhoto != nil {
+//                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: Auth.auth().currentUser?.displayName, likes: 0, comments: []))
+//                    .padding(.all)
+//            } else {
+//                PostDetailView(post: Post(id: "", title: postTitle, type: postType.rawValue.capitalized, user: Auth.auth().currentUser?, likes: 0, comments: []))
+//                    .padding(.all)
+//            }
             
             Spacer()
             
@@ -101,7 +87,7 @@ struct CreatePostView: View {
         }
         
         Button {
-            PostsController().addPost(title: postTitle, type: postType.rawValue, user: postUser)
+            PostsController().addPost(title: postTitle, type: postType.rawValue, user: Auth.auth().currentUser?.displayName! ?? "")
             
         } label: {
             Image(systemName: "plus.rectangle")
