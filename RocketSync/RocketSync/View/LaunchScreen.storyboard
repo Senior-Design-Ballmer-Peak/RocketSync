@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,26 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RocketSync" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="0.0" y="109" width="393" height="43"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="jea-28-MUB">
-                                <rect key="frame" x="0.0" y="476.66666666666674" width="393" height="341.33333333333326"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="jea-28-MUB">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="PdE-5p-ybU"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="jea-28-MUB" secondAttribute="trailing" id="TO2-pE-J5K"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="jea-28-MUB" secondAttribute="bottom" id="WtN-M9-Y1V"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="jz3-Pp-dkZ"/>
-                            <constraint firstItem="jea-28-MUB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="l4w-Sa-6X1"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="50" id="rlp-NX-Vf8"/>
+                            <constraint firstItem="jea-28-MUB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6kq-y0-ux4"/>
+                            <constraint firstItem="jea-28-MUB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="YTI-Vt-spH"/>
+                            <constraint firstItem="jea-28-MUB" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="irH-bh-fAP"/>
+                            <constraint firstItem="jea-28-MUB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="rkM-Zc-SvV"/>
+                            <constraint firstAttribute="trailing" secondItem="jea-28-MUB" secondAttribute="trailing" id="t7Z-bJ-rjB"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,5 +39,8 @@
     </scenes>
     <resources>
         <image name="Icon" width="341.33334350585938" height="341.33334350585938"/>
+        <namedColor name="BackgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
