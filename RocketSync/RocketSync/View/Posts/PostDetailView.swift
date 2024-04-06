@@ -26,7 +26,7 @@ struct PostDetailView: View {
                 
                 Spacer()
                 
-                Text(post.type)
+                Text(post.type.prefix(1).uppercased() + post.type.dropFirst())
                     .padding(.trailing)
                     .foregroundColor(Color("TextColor"))
             }
