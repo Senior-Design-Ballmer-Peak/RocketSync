@@ -15,6 +15,7 @@ struct CreatePostView: View {
     @State private var postType: PostType = .post
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var postPhoto: Data?
+    @Environment(\.presentationMode) var presentationMode
     
     enum PostType: String, CaseIterable, Identifiable {
         case post, question, design, launch
@@ -88,6 +89,7 @@ struct CreatePostView: View {
         
         Button {
             PostsController().addPost(title: postTitle, type: postType.rawValue, user: Auth.auth().currentUser?.displayName! ?? "")
+            self.presentationMode.wrappedValue.dismiss()
             
         } label: {
             Image(systemName: "plus.rectangle")
