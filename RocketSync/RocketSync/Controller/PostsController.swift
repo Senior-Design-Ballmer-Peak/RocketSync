@@ -62,6 +62,23 @@ class PostsController: ObservableObject {
     }
     
     func addLike(post: Post) {
-        
+        print("\(Auth.auth().currentUser?.displayName ?? "Name") liked the post: \(post.title)")
     }
+    
+    func addComment(post: Post, comment: String) {
+        print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
+    }
+    
+    func getUserPosts(type: String = "all") -> [Post] {
+        getPosts()
+        return posts.filter { post in
+            if (type == "all") {
+                post.user == Auth.auth().currentUser?.displayName
+            } else {
+                post.user == Auth.auth().currentUser?.displayName && post.type == type
+            }
+        }
+    }
+    
+    
 }
