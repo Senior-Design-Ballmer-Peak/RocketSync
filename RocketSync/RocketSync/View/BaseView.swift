@@ -42,6 +42,7 @@ struct BaseView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Color("TextColor"))
+
                 }
             }
             
@@ -56,7 +57,8 @@ struct BaseView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(Color("TextColor"))
                         .opacity(selectedTab == 0 ? 1.0 : 0.4)
-                }.disabled(selectedTab == 0)
+                }
+                .disabled(selectedTab == 0)
                 
                 Spacer()
                 
@@ -67,7 +69,8 @@ struct BaseView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(Color("TextColor"))
                         .opacity(selectedTab == 1 ? 1.0 : 0.4)
-                }.disabled(selectedTab == 1)
+                }
+                .disabled(selectedTab == 1)
                 
                 Spacer()
                 
@@ -78,7 +81,8 @@ struct BaseView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(Color("TextColor"))
                         .opacity(selectedTab == 2 ? 1.0 : 0.4)
-                }.disabled(selectedTab == 2)
+                }
+                .disabled(selectedTab == 2)
                 
                 Spacer()
                 
@@ -89,7 +93,8 @@ struct BaseView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(Color("TextColor"))
                         .opacity(selectedTab == 3 ? 1.0 : 0.4)
-                }.disabled(selectedTab == 3)
+                }
+                .disabled(selectedTab == 3)
                 
                 Spacer()
             }
