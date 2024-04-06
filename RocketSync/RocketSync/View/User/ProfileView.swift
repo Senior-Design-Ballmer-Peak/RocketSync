@@ -9,11 +9,12 @@ import SwiftUI
 import FirebaseAuth
 
 struct ProfileView: View {
+    @StateObject private var postController = PostsController()
+    @State private var posts: [Post] = []
+    @State private var isLoading = false
     @State var selection : Int = 0
     
     var body: some View {
-        BaseView(selectedTab: 3)
-        
         VStack {
             if selection == 0 {
                 HStack {
@@ -31,6 +32,14 @@ struct ProfileView: View {
                         Text(Auth.auth().currentUser?.email ?? "email")
                             .fontWeight(.light)
                             .foregroundColor(Color("TextColor"))
+                        
+                        NavigationLink(destination: CreatePostView(), label: {
+                            Text("Create Post")
+                                .padding(.all)
+                                .foregroundStyle(.tint)
+                                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.tint, lineWidth: 2))
+                                .foregroundColor(Color("TextColor"))
+                        })
                     }
                     
                     Spacer()
@@ -109,39 +118,59 @@ struct ProfileView: View {
             
             switch selection {
             case 0:
-                Spacer()
-                Text("Info")
-                Spacer()
+                List {
+                    ForEach(postController.getUserPosts()) { post in
+                        Section {
+                            PostDetailView(post: post, expanded: false)
+                        }
+                    }
+                }
+
             case 1:
-                Spacer()
-                Text("Posts")
-                Spacer()
+                List {
+                    ForEach(postController.getUserPosts(type: "post")) { post in
+                        Section {
+                            PostDetailView(post: post, expanded: false)
+                        }
+                    }
+                }
+                
             case 2:
-                Spacer()
-                Text("Questions")
-                Spacer()
+                List {
+                    ForEach(postController.getUserPosts(type: "question")) { post in
+                        Section {
+                            PostDetailView(post: post, expanded: false)
+                        }
+                    }
+                }
+
             case 3:
-                Spacer()
-                Text("Launches")
-                Spacer()
+                List {
+                    ForEach(postController.getUserPosts(type: "launches")) { post in
+                        Section {
+                            PostDetailView(post: post, expanded: false)
+                        }
+                    }
+                }
+
             case 4:
-                Spacer()
-                Text("Designs")
-                Spacer()
+                List {
+                    ForEach(postController.getUserPosts(type: "designs")) { post in
+                        Section {
+                            PostDetailView(post: post, expanded: false)
+                        }
+                    }
+                }
+    
             default:
                 Spacer()
             }
         }
-        
-        NavigationLink(destination: CreatePostView(), label: {
-            Text("Create Post")
-                .padding(.all)
-                .foregroundStyle(.tint)
-                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.tint, lineWidth: 2))
-                .foregroundColor(Color("TextColor"))
-
-            
-        })
+    }
+    
+    func fetchPosts() {
+        isLoading = true
+        self.posts = postController.getUserPosts()
     }
 }
 
