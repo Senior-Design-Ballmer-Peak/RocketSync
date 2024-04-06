@@ -14,8 +14,6 @@ struct DeviceDetailView: View {
     var peripheral: CBPeripheral
     
     var body: some View {
-        BaseView()
-        
         VStack {
             
             Text("\(peripheral.name ?? "Unknown")")

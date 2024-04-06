@@ -16,7 +16,6 @@ struct PostsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                BaseView(selectedTab: 0)
 
                 List {
                     ForEach(posts) { post in

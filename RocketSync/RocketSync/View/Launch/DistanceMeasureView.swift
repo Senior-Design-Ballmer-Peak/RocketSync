@@ -46,7 +46,6 @@ struct DistanceMeasureView: View {
     @State private var distance: CLLocationDistance?
     
     var body: some View {
-        BaseView(selectedTab: 1)
         
         VStack {
             ZStack {
