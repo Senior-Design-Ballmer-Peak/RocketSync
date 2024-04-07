@@ -38,7 +38,7 @@ struct PostDetailView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 300)
                     .clipped()
-            } else {
+            } else if post.type != "question" {
                 
                 Image("rocket")
                     .resizable()
