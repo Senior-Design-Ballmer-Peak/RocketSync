@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct ProfileView: View {
-    @StateObject private var postController = PostsController()
+    @EnvironmentObject var postController: PostsController
     @State private var posts: [Post] = []
     @State private var isLoading = false
     @State var selection : Int = 0
