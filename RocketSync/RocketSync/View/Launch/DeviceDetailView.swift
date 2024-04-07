@@ -24,7 +24,7 @@ struct DeviceDetailView: View {
             Divider()
             
             if bluetoothManager.receivedData.split(separator: ",").count == 16 {
-                var stats = bluetoothManager.receivedData.split(separator: ", ")
+                let stats = bluetoothManager.receivedData.split(separator: ", ")
                 
                 Text("Acceleration")
                     .font(.title2)
@@ -137,6 +137,13 @@ struct DeviceDetailView: View {
                         .foregroundStyle(stats[15].contains("-") ? .red : .green)
                     Spacer()
                 }
+                
+                Button {
+                    bluetoothManager.launch(to: peripheral, characteristicUUID: "FF01")
+                } label: {
+                    Text("Launch")
+                }
+
             } else {
                 Text("No Data")
                     .font(.caption)
