@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct PostsView: View {
-    @EnvironmentObject var postController: PostsController
+    var postController: PostsController
     @State private var posts: [Post] = []
-    @State private var isLoading = false
-
     
     var body: some View {
         NavigationStack {
             VStack {
 
                 List {
-                    ForEach(posts) { post in
+                    ForEach(postController.getAllPosts()) { post in
                         Section {
                             PostDetailView(post: post)
                                 .background(
@@ -28,26 +26,11 @@ struct PostsView: View {
                         }
                     }
                 }
-                .disabled(isLoading)
-                .opacity(isLoading ? 0.5 : 1)
-            }
-            .onAppear {
-                fetchPosts()
             }
         }
-        .onChange(of: postController.posts, { oldValue, newValue in
-            posts = newValue
-            isLoading = false
-        })
-    }
-        
-    
-    func fetchPosts() {
-        isLoading = true
-        postController.getPosts()
     }
 }
 
 #Preview {
-    PostsView()
+    PostsView(postController: PostsController())
 }
