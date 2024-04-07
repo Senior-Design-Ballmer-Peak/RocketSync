@@ -85,4 +85,20 @@ class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate,
             centralManager.cancelPeripheralConnection(peripheral)
         }
     }
+    
+    func launch(to peripheral: CBPeripheral, characteristicUUID: String) {
+        guard let service = peripheral.services?.first else {
+            print("No services found.")
+            return
+        }
+        
+        guard let characteristic = service.characteristics?.first(where: { $0.uuid.uuidString == characteristicUUID }) else {
+            print("Characteristic not found.")
+            return
+        }
+        
+        let dataToSend = "launch".data(using: .utf8)!
+        
+        peripheral.writeValue(dataToSend, for: characteristic, type: .withResponse)
+    }
 }
