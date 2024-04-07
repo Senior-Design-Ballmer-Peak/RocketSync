@@ -13,106 +13,61 @@ struct ContentView: View {
     var showAnimation = false
     @State var selectedTab: Int = 0
     @EnvironmentObject var authModel: AuthenticationModel
+    var postController = PostsController()
     var hasPersistedSignedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     
     var body: some View {
-        NavigationStack {
-            VStack  {
-                if authModel.state == .signedOut && !hasPersistedSignedIn {
-                    LoginView()
-                } else {
-                    switch($selectedTab.wrappedValue){
-                    case 0: PostsView()
-                    case 1: DistanceMeasureView()
-                    case 2: DeviceConnectionView()
-                    case 3: ProfileView()
-                    case 4: SettingsView()
-                    default: PostsView()
+        if authModel.state == .signedOut && !hasPersistedSignedIn {
+            LoginView()
+        } else {
+
+            //                    Image(systemName: "location.north")
+            //                        .foregroundColor(Color("TextColor"))
+            //                        .id(titleAppears)
+            //                        .transition(PushTransition(edge: .bottom))
+            //                        .onAppear{ titleAppears.toggle() }
+            //                        .animation(animation, value: titleAppears)
+
+            TabView(selection: $selectedTab) {
+                PostsView(postController: postController)
+                    .tabItem {
+                        Label("Posts", systemImage: "aqi.medium")
                     }
-                }
+                    .tag(0)
+                
+                DistanceMeasureView()
+                    .tabItem {
+                        Label("Distance", systemImage: "scope")
+                    }
+                    .tag(1)
+                
+                DeviceConnectionView()
+                    .tabItem {
+                        Label("L-TAS", systemImage: "location.north.line.fill")
+                    }
+                    .tag(2)
+                
+                ProfileView(postController: postController)
+                    .tabItem {
+                        Label("Profile", systemImage: "person.fill")
+                    }
+                    .tag(3)
+                
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gear")
+                    }
+                    .tag(4)
+                DesignPostView()
+                    .tabItem {
+                        Label("Scan Rocket", systemImage: "laser.burst")
+                    }
+                    .tag(5)
             }
+            .accentColor(Color("TextColor"))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(Text("RocketSync"))
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                HStack {
-                    Image(systemName: "location.north")
-                        .foregroundColor(Color("TextColor"))
-                        .id(titleAppears)
-                        .transition(PushTransition(edge: .bottom))
-                        .onAppear{ titleAppears.toggle() }
-                        .animation(animation, value: titleAppears)
-                    
-                    Text("RocketSync")
-                        .font(.title)
-                        .fontWidth(.expanded)
-                        .foregroundColor(Color("TextColor"))
-                        .id(titleAppears)
-                        .transition(PushTransition(edge: .top))
-                        .animation(animation, value: titleAppears)
-                    
-                }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Image(systemName: "gear")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color("TextColor"))
-                    .onTapGesture { self.selectedTab = 4 }
-            }
-            
-            ToolbarItemGroup(placement: .bottomBar) {
-                
-                Spacer()
-                
-                Image(systemName: "aqi.medium")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .opacity(selectedTab == 0 ? 1.0 : 0.4)
-                    .disabled(selectedTab == 0)
-                    .onTapGesture { self.selectedTab = 0 }
-                
-                Spacer()
-                
-                Image(systemName: "scope")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .opacity(selectedTab == 1 ? 1.0 : 0.4)
-                    .disabled(selectedTab == 1)
-                    .onTapGesture { self.selectedTab = 1 }
-                
-                Spacer()
-                
-                Image(systemName: "location.north.line.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .opacity(selectedTab == 2 ? 1.0 : 0.4)
-                    .disabled(selectedTab == 2)
-                    .onTapGesture { self.selectedTab = 2 }
-                
-                Spacer()
-                
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .opacity(selectedTab == 3 ? 1.0 : 0.4)
-                    .disabled(selectedTab == 3)
-                    .onTapGesture { self.selectedTab = 3 }
-                
-                Spacer()
-            }
-        }
-        .tint(Color("TextColor"))
-        .navigationBarTitleDisplayMode(.automatic)
-        
     }
 }
 
