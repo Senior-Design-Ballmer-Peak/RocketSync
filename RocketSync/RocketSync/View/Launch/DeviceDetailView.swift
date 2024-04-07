@@ -23,111 +23,120 @@ struct DeviceDetailView: View {
             
             Divider()
             
-            if bluetoothManager.receivedData.split(separator: "|").count == 2 {
+            if bluetoothManager.receivedData.split(separator: ",").count == 16 {
+                var stats = bluetoothManager.receivedData.split(separator: ", ")
                 
-                VStack {
-                    Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[0])
-                        .font(.title2)
-                        .padding(.all)
-                        .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        VStack {
-                            
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[0].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[0])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[0])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                            
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[1].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[1])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[1])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                            
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[2].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[2])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[2])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                            
-                        }
-                        
-                        Spacer()
-                        
-                        VStack {
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[3].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[3])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[3])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                            
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[4].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[4])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[4])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                            
-                            if bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[5].contains("-") {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[5])
-                                    .font(.title3)
-                                    .foregroundStyle(.red)
-                            } else {
-                                Text(bluetoothManager.receivedData.split(separator: "|")[0].split(separator: " - ")[1].split(separator: ", ")[5])
-                                    .font(.title3)
-                                    .foregroundStyle(.green)
-                            }
-                        }
-                        
-                        Spacer()
-                    }
+                Text("Acceleration")
+                    .font(.title2)
+                    .padding(.all)
+                    .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+                HStack {
+                    Spacer()
+                    Text(stats[0])
+                        .font(.title3)
+                        .foregroundStyle(stats[0].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[1])
+                        .font(.title3)
+                        .foregroundStyle(stats[1].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[2])
+                        .font(.title3)
+                        .foregroundStyle(stats[2].contains("-") ? .red : .green)
+                    Spacer()
                 }
                 
                 Divider()
                 
-                VStack {
-                    Text(bluetoothManager.receivedData.split(separator: "|")[1].split(separator: " - ")[0])
-                        .font(.title2)
-                        .padding(.all)
-                        .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
-                    
-                    Text(bluetoothManager.receivedData.split(separator: "|")[1].split(separator: " - ")[1].split(separator: ", ")[0])
+                Text("Gyro")
+                    .font(.title2)
+                    .padding(.all)
+                    .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+                HStack {
+                    Spacer()
+                    Text(stats[3])
                         .font(.title3)
-                    Text(bluetoothManager.receivedData.split(separator: "|")[1].split(separator: " - ")[1].split(separator: ", ")[1])
+                        .foregroundStyle(stats[3].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[4])
                         .font(.title3)
-                    Text(bluetoothManager.receivedData.split(separator: "|")[1].split(separator: " - ")[1].split(separator: ", ")[2])
+                        .foregroundStyle(stats[4].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[5])
                         .font(.title3)
-                    
+                        .foregroundStyle(stats[5].contains("-") ? .red : .green)
+                    Spacer()
                 }
                 
                 Divider()
                 
-                Spacer()
+                Text("Mag")
+                    .font(.title2)
+                    .padding(.all)
+                    .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+                HStack {
+                    Spacer()
+                    Text(stats[6])
+                        .font(.title3)
+                        .foregroundStyle(stats[6].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[7])
+                        .font(.title3)
+                        .foregroundStyle(stats[7].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[8])
+                        .font(.title3)
+                        .foregroundStyle(stats[8].contains("-") ? .red : .green)
+                    Spacer()
+                }
                 
+                Divider()
+                
+                Text("Atmosphere")
+                    .font(.title2)
+                    .padding(.all)
+                    .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+                HStack {
+                    Spacer()
+                    Text(stats[9])
+                        .font(.title3)
+                        .foregroundStyle(stats[9].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[10])
+                        .font(.title3)
+                        .foregroundStyle(stats[10].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[11])
+                        .font(.title3)
+                        .foregroundStyle(stats[11].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[12])
+                        .font(.title3)
+                        .foregroundStyle(stats[12].contains("-") ? .red : .green)
+                    Spacer()
+                }
+                
+                Divider()
+                
+                Text("Location")
+                    .font(.title2)
+                    .padding(.all)
+                    .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+                HStack {
+                    Spacer()
+                    Text(stats[13])
+                        .font(.title3)
+                        .foregroundStyle(stats[13].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[14])
+                        .font(.title3)
+                        .foregroundStyle(stats[14].contains("-") ? .red : .green)
+                    Spacer()
+                    Text(stats[15])
+                        .font(.title3)
+                        .foregroundStyle(stats[15].contains("-") ? .red : .green)
+                    Spacer()
+                }
             } else {
                 Text("No Data")
                     .font(.caption)
