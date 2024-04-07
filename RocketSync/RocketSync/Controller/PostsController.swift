@@ -80,5 +80,16 @@ class PostsController: ObservableObject {
         }
     }
     
+    func getAllPosts(type: String = "all") -> [Post] {
+        getPosts()
+        if (type == "all") {
+            return posts
+        } else {
+            return posts.filter { post in
+                post.type == type
+            }
+        }
+    }
+    
     
 }
