@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DF1172BA783AA001F5F59 /* PostOptions.swift */; };
+		5DDE50F32BC235780004CB0C /* ARWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F22BC235780004CB0C /* ARWrapper.swift */; };
+		5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */; };
+		5DDE50F72BC2381C0004CB0C /* Mesh+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */; };
 		5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE01FA52BB3836000EB100E /* BaseView.swift */; };
 		5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */; };
 		5DF640BF2BA4A9D100B160CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BE2BA4A9D100B160CD /* ContentView.swift */; };
@@ -47,6 +50,9 @@
 
 /* Begin PBXFileReference section */
 		5D0DF1172BA783AA001F5F59 /* PostOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptions.swift; sourceTree = "<group>"; };
+		5DDE50F22BC235780004CB0C /* ARWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARWrapper.swift; sourceTree = "<group>"; };
+		5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignPostView.swift; sourceTree = "<group>"; };
+		5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mesh+Ext.swift"; sourceTree = "<group>"; };
 		5DE01FA52BB3836000EB100E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		5DF640B92BA4A9D100B160CD /* RocketSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RocketSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketSyncApp.swift; sourceTree = "<group>"; };
@@ -175,6 +181,8 @@
 				5DF640D02BA4ABE300B160CD /* Post.swift */,
 				5DF640D22BA4ABFA00B160CD /* DistanceMeasureController.swift */,
 				5DF640D42BA4AC0E00B160CD /* AuthenticationModel.swift */,
+				5DDE50F22BC235780004CB0C /* ARWrapper.swift */,
+				5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,6 +212,7 @@
 				5DF640E72BA4ADE800B160CD /* PostsView.swift */,
 				5DF640E92BA4ADF200B160CD /* PostDetailView.swift */,
 				5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */,
+				5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -308,15 +317,18 @@
 				5DF640CF2BA4ABB900B160CD /* LoginOptions.swift in Sources */,
 				5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */,
 				5DF640EA2BA4ADF200B160CD /* PostDetailView.swift in Sources */,
+				5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */,
 				5DF640E32BA4AD7400B160CD /* DeviceConnectionView.swift in Sources */,
 				5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */,
 				5DF640D72BA4AC4D00B160CD /* PostsController.swift in Sources */,
 				5DF640D52BA4AC0E00B160CD /* AuthenticationModel.swift in Sources */,
+				5DDE50F72BC2381C0004CB0C /* Mesh+Ext.swift in Sources */,
 				5DF640D32BA4ABFA00B160CD /* DistanceMeasureController.swift in Sources */,
 				5DF640D92BA4AC5700B160CD /* BluetoothController.swift in Sources */,
 				5DF640E12BA4AD5700B160CD /* DistanceMeasureView.swift in Sources */,
 				5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */,
 				5DF640DE2BA4AD2E00B160CD /* LoginView.swift in Sources */,
+				5DDE50F32BC235780004CB0C /* ARWrapper.swift in Sources */,
 				5DF640D12BA4ABE300B160CD /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +471,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = RocketSync;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "RocketSync needs bluetooth to connect to external devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "RocketSync needs camera services for AR scanning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "RocketSync needs location services for measuring distance.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -498,6 +511,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = RocketSync;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "RocketSync needs bluetooth to connect to external devices.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "RocketSync needs camera services for AR scanning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "RocketSync needs location services for measuring distance.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
