@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostsView: View {
-    @StateObject private var postController = PostsController()
+    @EnvironmentObject var postController: PostsController
     @State private var posts: [Post] = []
     @State private var isLoading = false
 
