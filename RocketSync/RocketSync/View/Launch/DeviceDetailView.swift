@@ -11,6 +11,8 @@ import CoreBluetooth
 
 struct DeviceDetailView: View {
     @ObservedObject var bluetoothManager: BluetoothController
+    @State var data = "Starting"
+    @Environment(\.presentationMode) var presentationMode
     var peripheral: CBPeripheral
     
     var body: some View {
@@ -139,18 +141,43 @@ struct DeviceDetailView: View {
                 }
                 
                 Button {
-                    bluetoothManager.launch(to: peripheral, characteristicUUID: "FF01")
+                    bluetoothManager.launch(to: peripheral)
                 } label: {
                     Text("Launch")
                 }
+                .padding(.all)
+                .foregroundStyle(.tint)
+                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.tint, lineWidth: 2))
+                .foregroundColor(Color("TextColor"))
 
             } else {
-                Text("No Data")
-                    .font(.caption)
+                VStack {
+                    Text("No Data")
+                        .font(.caption)
+                    Text($data.wrappedValue)
+                }
             }
+            
+            Button {
+                bluetoothManager.disconnect(from: peripheral)
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Text("Disconnect")
+            }
+            .padding(.all)
+            .foregroundStyle(.tint)
+            .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.tint, lineWidth: 2))
+            .foregroundColor(Color("TextColor"))
+        }
+        .onReceive(bluetoothManager.$receivedData) { newData in
+            self.data = newData
         }
         .onAppear {
             bluetoothManager.connect(to: peripheral)
         }
+//        .onDisappear(perform: {
+//            bluetoothManager.disconnect(from: peripheral)
+//        })
+        .navigationBarBackButtonHidden(true)
     }
 }
