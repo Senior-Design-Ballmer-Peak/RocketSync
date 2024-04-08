@@ -17,56 +17,85 @@ struct ContentView: View {
     var hasPersistedSignedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     
     var body: some View {
-        if authModel.state == .signedOut && !hasPersistedSignedIn {
-            LoginView()
-        } else {
-
-            //                    Image(systemName: "location.north")
-            //                        .foregroundColor(Color("TextColor"))
-            //                        .id(titleAppears)
-            //                        .transition(PushTransition(edge: .bottom))
-            //                        .onAppear{ titleAppears.toggle() }
-            //                        .animation(animation, value: titleAppears)
-
-            TabView(selection: $selectedTab) {
-                PostsView(postController: postController)
-                    .tabItem {
-                        Label("Posts", systemImage: "aqi.medium")
-                    }
-                    .tag(0)
+        NavigationStack {
+            if authModel.state == .signedOut && !hasPersistedSignedIn {
+                LoginView()
+            } else {
                 
-                DistanceMeasureView()
-                    .tabItem {
-                        Label("Distance", systemImage: "scope")
-                    }
-                    .tag(1)
+                //                    Image(systemName: "location.north")
+                //                        .foregroundColor(Color("TextColor"))
+                //                        .id(titleAppears)
+                //                        .transition(PushTransition(edge: .bottom))
+                //                        .onAppear{ titleAppears.toggle() }
+                //                        .animation(animation, value: titleAppears)
                 
-                DeviceConnectionView()
-                    .tabItem {
-                        Label("L-TAS", systemImage: "location.north.line.fill")
+                TabView(selection: $selectedTab) {
+                    PostsView(postController: postController)
+                        .tabItem {
+                            Label("Posts", systemImage: "aqi.medium")
+                        }
+                        .tag(0)
+                    
+                    DistanceMeasureView()
+                        .tabItem {
+                            Label("Distance", systemImage: "scope")
+                        }
+                        .tag(1)
+                    
+                    DeviceConnectionView()
+                        .tabItem {
+                            Label("L-TAS", systemImage: "location.north.line.fill")
+                        }
+                        .tag(2)
+                    
+                    ProfileView(postController: postController)
+                        .tabItem {
+                            Label("Profile", systemImage: "person.fill")
+                        }
+                        .tag(3)
+//                    
+//                    SettingsView()
+//                        .tabItem {
+//                            Label("Settings", systemImage: "gear")
+//                        }
+//                        .tag(4)
+                    DesignPostView()
+                        .tabItem {
+                            Label("Scan Rocket", systemImage: "laser.burst")
+                        }
+                        .tag(5)
+                }
+                .accentColor(Color("TextColor"))
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(
+                    leading: HStack {
+                        Image(systemName: "location.north")
+                            .foregroundColor(Color("TextColor"))
+                            .id(titleAppears)
+                            .transition(PushTransition(edge: .bottom))
+                            .onAppear{ titleAppears.toggle() }
+                            .animation(animation, value: titleAppears)
+                        
+                        Text("RocketSync")
+                            .font(.title)
+                            .fontWidth(.expanded)
+                            .foregroundColor(Color("TextColor"))
+                            .id(titleAppears)
+                            .transition(PushTransition(edge: .top))
+                            .animation(animation, value: titleAppears)
+                        
+                    },
+                    trailing: Button(action: {
+                        
+                    }) {
+                        Image(systemName: "gear")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.primary)
+                            .font(.title)
                     }
-                    .tag(2)
-                
-                ProfileView(postController: postController)
-                    .tabItem {
-                        Label("Profile", systemImage: "person.fill")
-                    }
-                    .tag(3)
-                
-                SettingsView()
-                    .tabItem {
-                        Label("Settings", systemImage: "gear")
-                    }
-                    .tag(4)
-                DesignPostView()
-                    .tabItem {
-                        Label("Scan Rocket", systemImage: "laser.burst")
-                    }
-                    .tag(5)
+                )
             }
-            .accentColor(Color("TextColor"))
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(Text("RocketSync"))
         }
     }
 }
