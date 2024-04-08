@@ -12,6 +12,7 @@ class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate,
     var centralManager: CBCentralManager!
     @Published var discoveredPeripherals = [CBPeripheral]()
     @Published var receivedData = ""
+    private var characteristicUUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 
     override init() {
         super.init()
@@ -52,22 +53,27 @@ class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate,
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         for characteristic in characteristics {
-            if characteristic.uuid == CBUUID(string: "FF01") { // Assuming FF01 is the characteristic you're interested in
-                // Enable notifications for this characteristic
+            if characteristic.uuid == CBUUID(string: characteristicUUID) {
                 peripheral.setNotifyValue(true, for: characteristic)
+            }
+            else {
+                print("TESTING BAD 1")
             }
         }
     }
 
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if characteristic.uuid == CBUUID(string: "FF01"), let value = characteristic.value {
+        if characteristic.uuid == CBUUID(string: characteristicUUID), let value = characteristic.value {
             // Convert data to a string using UTF-8 encoding
             if let string = String(data: value, encoding: .utf8) {
                 receivedData = string
             } else {
                 print("Received an invalid UTF-8 sequence.")
             }
+        }
+        else {
+            print("TESTING BAD 2")
         }
     }
 
@@ -86,13 +92,13 @@ class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate,
         }
     }
     
-    func launch(to peripheral: CBPeripheral, characteristicUUID: String) {
+    func launch(to peripheral: CBPeripheral) {
         guard let service = peripheral.services?.first else {
             print("No services found.")
             return
         }
         
-        guard let characteristic = service.characteristics?.first(where: { $0.uuid.uuidString == characteristicUUID }) else {
+        guard let characteristic = service.characteristics?.first(where: { $0.uuid.uuidString == "6E400002-B5A3-F393-E0A9-E50E24DCCA9E" }) else {
             print("Characteristic not found.")
             return
         }
@@ -100,5 +106,23 @@ class BluetoothController: NSObject, ObservableObject, CBCentralManagerDelegate,
         let dataToSend = "launch".data(using: .utf8)!
         
         peripheral.writeValue(dataToSend, for: characteristic, type: .withResponse)
+    }
+    
+    func disconnect(from peripheral: CBPeripheral) {
+        guard let services = peripheral.services else {
+            centralManager.cancelPeripheralConnection(peripheral)
+            return
+        }
+        
+        for service in services {
+            guard let characteristics = service.characteristics else { continue }
+            for characteristic in characteristics {
+                if characteristic.isNotifying {
+                    peripheral.setNotifyValue(false, for: characteristic)
+                }
+            }
+        }
+        
+        centralManager.cancelPeripheralConnection(peripheral)
     }
 }
