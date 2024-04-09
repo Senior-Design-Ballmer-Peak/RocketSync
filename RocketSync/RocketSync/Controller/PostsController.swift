@@ -12,12 +12,10 @@ import FirebaseAuth
 class PostsController: ObservableObject {
     let db = Firestore.firestore()
     @Published var posts: [Post] = []
-    @Published var error: Error?
     
     func getPosts() {
         db.collection("Posts").order(by: "type").addSnapshotListener { (querySnapshot, error) in
             if let e = error {
-                self.error = e
                 print("Error loading posts: \(e)")
                 return
             }
@@ -70,6 +68,7 @@ class PostsController: ObservableObject {
     }
     
     func getUserPosts(type: String = "all") -> [Post] {
+        print("Posts user: \(posts.count)")
         getPosts()
         return posts.filter { post in
             if (type == "all") {
@@ -81,6 +80,7 @@ class PostsController: ObservableObject {
     }
     
     func getAllPosts(type: String = "all") -> [Post] {
+        print("Posts all: \(posts.count)")
         getPosts()
         if (type == "all") {
             return posts

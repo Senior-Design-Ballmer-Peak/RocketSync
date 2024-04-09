@@ -10,8 +10,6 @@ import FirebaseAuth
 
 struct ProfileView: View {
     var postController: PostsController
-    @State private var posts: [Post] = []
-    @State private var isLoading = false
     @State var selection : Int = 0
     
     var body: some View {

@@ -175,9 +175,9 @@ struct DeviceDetailView: View {
         .onAppear {
             bluetoothManager.connect(to: peripheral)
         }
-//        .onDisappear(perform: {
-//            bluetoothManager.disconnect(from: peripheral)
-//        })
+        .onDisappear(perform: {
+            bluetoothManager.disconnect(from: peripheral)
+        })
         .navigationBarBackButtonHidden(true)
     }
 }
