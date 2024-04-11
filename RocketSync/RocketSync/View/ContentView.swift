@@ -59,11 +59,11 @@ struct ContentView: View {
 //                            Label("Settings", systemImage: "gear")
 //                        }
 //                        .tag(4)
-                    DesignPostView()
-                        .tabItem {
-                            Label("Scan Rocket", systemImage: "laser.burst")
-                        }
-                        .tag(5)
+//                    DesignPostView()
+//                        .tabItem {
+//                            Label("Scan Rocket", systemImage: "laser.burst")
+//                        }
+//                        .tag(5)
                 }
                 .accentColor(Color("TextColor"))
                 .navigationBarTitleDisplayMode(.inline)
