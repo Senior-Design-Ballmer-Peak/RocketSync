@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 import CoreBluetooth
 
 struct DeviceConnectionView: View {
@@ -13,16 +14,18 @@ struct DeviceConnectionView: View {
     @State private var selectedPeripheral: CBPeripheral?
     
     var body: some View {
-        List(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
-            Section {
-                if peripheral.name == "L-TAS" {
-                    NavigationLink(destination: DeviceDetailView(bluetoothManager: bluetoothManager, peripheral: peripheral)) {
-                        Text(peripheral.name ?? "Unknown")
-                            .bold()
+        VStack {
+            List(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
+                Section {
+                    if peripheral.name == "L-TAS" {
+                        NavigationLink(destination: DeviceDetailView(bluetoothManager: bluetoothManager, peripheral: peripheral)) {
+                            Text(peripheral.name ?? "Unknown")
+                                .bold()
+                        }
                     }
                 }
+                .listRowBackground(Color.blue.opacity(0.1))
             }
-            .listRowBackground(Color.blue.opacity(0.1))
         }
     }
 }
