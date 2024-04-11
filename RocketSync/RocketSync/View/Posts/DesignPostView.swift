@@ -9,25 +9,23 @@ import SwiftUI
 
 struct DesignPostView: View {
     @State private var submittedExportRequest = false
-    @State private var exportedURL: URL?
     @State private var submittedName = ""
-    @Environment(\.presentationMode) var presentationMode
-    
     var body: some View {
-        VStack {
-            ARWrapper(submittedExportRequest: $submittedExportRequest, exportedURL: $exportedURL)
-            Button {
-                alertTF(title: "Save file", message: "Enter your file name", hintText: "my_file", primaryTitle: "Save", secondaryTitle: "cancel") { text in
-                    self.submittedName = text
-                    self.submittedExportRequest.toggle()
-                } secondaryAction: {
-                    print("Cancelled")
+        HStack {
+            FetchModelView()
+            VStack {
+                ARViewWrapper(submittedExportRequest: self.$submittedExportRequest, submittedName: self.$submittedName)
+                    .ignoresSafeArea()
+                Button("Export") {
+                    alertTF(title: "Save file", message: "enter your file name", hintText: "my_file", primaryTitle: "Save", secondaryTitle: "cancel") { text in
+                        self.submittedName = text
+                        self.submittedExportRequest.toggle()
+                    } secondaryAction: {
+                        print("Cancelled")
+                    }
                 }
-                self.presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("Export")
-            }.padding(.all)
-
+                .padding()
+            }
         }
     }
 }

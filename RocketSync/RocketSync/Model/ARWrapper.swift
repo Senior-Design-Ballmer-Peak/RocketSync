@@ -9,12 +9,11 @@ import SwiftUI
 import RealityKit
 import ARKit
 
-struct ARWrapper: UIViewRepresentable {
+struct ARViewWrapper: UIViewRepresentable {
     @Binding var submittedExportRequest: Bool
-    @Binding var exportedURL: URL?
+    @Binding var submittedName: String
     
     let arView = ARView(frame: .zero)
-    
     func makeUIView(context: Context) -> ARView {
         return arView
     }
@@ -27,14 +26,27 @@ struct ARWrapper: UIViewRepresentable {
         
         if submittedExportRequest {
             guard let camera = arView.session.currentFrame?.camera else { return }
-            if let meshAnchors = arView.session.currentFrame?.anchors.compactMap( { $0 as? ARMeshAnchor } ),
+            
+            if let meshAnchors = arView.session.currentFrame?.anchors.compactMap({ $0 as? ARMeshAnchor }),
                let asset = vm.convertToAsset(meshAnchors: meshAnchors, camera: camera) {
                 do {
-                    let url = try vm.export(asset: asset)
-                    exportedURL = url
+                    try ExportViewModel().export(asset: asset, fileName: self.submittedName)
                 } catch {
-                    print("Export error: ", error)
+                    print("Export error")
                 }
+            }
+        }
+    }
+    
+    private func setARViewOptions(_ arView: ARView) {
+        arView.debugOptions.insert(.showSceneUnderstanding)
+    }
+    
+    func share(url: URL) {
+        let vc = UIActivityViewController(activityItems: [url],applicationActivities: nil)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let window = windowScene.windows.first {
+                window.rootViewController?.present(vc, animated: true, completion: nil)
             }
         }
     }
@@ -42,51 +54,56 @@ struct ARWrapper: UIViewRepresentable {
     private func buildConfigure() -> ARWorldTrackingConfiguration {
         let configuration = ARWorldTrackingConfiguration()
         
-        configuration.environmentTexturing = .manual
-        configuration.sceneReconstruction = .meshWithClassification
+        configuration.environmentTexturing = .automatic
         
         arView.automaticallyConfigureSession = false
-        
+        configuration.sceneReconstruction = .meshWithClassification
+    
         if type(of: configuration).supportsFrameSemantics(.sceneDepth) {
             configuration.frameSemantics = .sceneDepth
         }
         
+        
         return configuration
-    }
-    
-    private func setARViewOptions(_ arView: ARView) {
-        arView.debugOptions.insert(.showSceneUnderstanding)
     }
 }
 
 class ExportViewModel: NSObject, ObservableObject, ARSessionDelegate {
-
+    @Published var imageViewHeight: CGFloat = 0
+    @Published var exportedURL: URL?
+        
     func convertToAsset(meshAnchors: [ARMeshAnchor], camera: ARCamera) -> MDLAsset? {
         guard let device = MTLCreateSystemDefaultDevice() else { return nil }
+
         let asset = MDLAsset()
+
         for anchor in meshAnchors {
             let mdlMesh = anchor.geometry.toMDLMesh(device: device, camera: camera, modelMatrix: anchor.transform)
+            asset.add(mdlMesh)
         }
-        
+
         return asset
     }
     
-    func export(asset: MDLAsset) throws -> URL {
+    func export(asset: MDLAsset, fileName: String) throws -> URL {
         guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw NSError(domain: "com.original.CreatingLidarModel", code: 153)
+            throw NSError(domain: "com.original.VirtualShowrooms", code: 153)
         }
         
         let folderName = "OBJ_FILES"
         let folderURL = directory.appendingPathComponent(folderName)
-        try? FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true)
-        let url = folderURL.appendingPathComponent("\(UUID().uuidString).obj")
+        
+        try? FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+        
+        let url = folderURL.appendingPathComponent("\( fileName.isEmpty ? UUID().uuidString : fileName ).obj")
         
         do {
             try asset.export(to: url)
-            print("Objective save succesfully at ", url)
+            print("Object saved successfully at: ", url)
+            
             return url
         } catch {
-            print(error)
+            print("Error saving .obj file \(error)")
         }
         
         return url
