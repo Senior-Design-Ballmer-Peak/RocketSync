@@ -30,8 +30,9 @@ class PostsController: ObservableObject {
                        let postUser = data["user"] as? String,
                        let postLikes = data["likes"] as? Int,
                        let postCommentText = data["commentText"] as? [String],
-                       let postCommentUsers = data["commentUsers"] as? [String] {
-                        let newPost = Post(id: doc.documentID, title: postTitle, type: postType, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                       let postCommentUsers = data["commentUsers"] as? [String],
+                       let postText = data["text"] as? String {
+                        let newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
                         fetchedPosts.append(newPost)
                     }
                 }
@@ -40,11 +41,12 @@ class PostsController: ObservableObject {
         }
     }
     
-    func addPost(title: String, type: String, user: String) {
+    func addPost(title: String, type: String, text: String) {
         let doc: [String: Any] = [
             "title": title,
+            "text": text,
             "type": type,
-            "user": user,
+            "user": Auth.auth().currentUser?.displayName ?? "",
             "likes": 0,
             "commentText": [],
             "commentUsers": []
@@ -60,10 +62,19 @@ class PostsController: ObservableObject {
     }
     
     func addLike(post: Post) {
+        let dbPost = db.collection("Posts").document(post.id)
+        dbPost.setData(["likes": post.likes + 1])
+        
         print("\(Auth.auth().currentUser?.displayName ?? "Name") liked the post: \(post.title)")
     }
     
     func addComment(post: Post, comment: String) {
+        let dbPost = db.collection("Posts").document(post.id)
+        var comments = post.commentText
+        var users = post.commentUsers
+        dbPost.setData(["commentText": comments.append(comment)])
+        dbPost.setData(["commentUser": users.append(Auth.auth().currentUser?.displayName ?? "Anonomous") ])
+        
         print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
     }
     
