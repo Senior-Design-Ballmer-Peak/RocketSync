@@ -36,7 +36,7 @@ class PostsController: ObservableObject {
                         fetchedPosts.append(newPost)
                     }
                 }
-                self.posts = fetchedPosts
+                self.posts = fetchedPosts.reversed()
             }
         }
     }
@@ -63,7 +63,7 @@ class PostsController: ObservableObject {
     
     func addLike(post: Post) {
         let dbPost = db.collection("Posts").document(post.id)
-        dbPost.setData(["likes": post.likes + 1])
+        dbPost.updateData(["likes": post.likes + 1])
         
         print("\(Auth.auth().currentUser?.displayName ?? "Name") liked the post: \(post.title)")
     }
@@ -72,8 +72,8 @@ class PostsController: ObservableObject {
         let dbPost = db.collection("Posts").document(post.id)
         var comments = post.commentText
         var users = post.commentUsers
-        dbPost.setData(["commentText": comments.append(comment)])
-        dbPost.setData(["commentUser": users.append(Auth.auth().currentUser?.displayName ?? "Anonomous") ])
+        dbPost.updateData(["commentText": comments.append(comment)])
+        dbPost.updateData(["commentUser": users.append(Auth.auth().currentUser?.displayName ?? "Anonomous") ])
         
         print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
     }
@@ -87,18 +87,18 @@ class PostsController: ObservableObject {
             } else {
                 post.user == Auth.auth().currentUser?.displayName && post.type == type
             }
-        }
+        }.reversed()
     }
     
     func getAllPosts(type: String = "all") -> [Post] {
         print("Posts all: \(posts.count)")
         getPosts()
         if (type == "all") {
-            return posts
+            return posts.reversed()
         } else {
             return posts.filter { post in
                 post.type == type
-            }
+            }.reversed()
         }
     }
     

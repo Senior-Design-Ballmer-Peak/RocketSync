@@ -52,13 +52,16 @@ struct PostDetailView: View {
                 .padding(.horizontal)
             
             if expanded {
+                Text(post.text)
+                    .foregroundColor(Color("TextColor"))
+                    .padding(.horizontal)
                 
                 Divider()
                 
                 HStack {
                     Spacer()
                     Button(action: {
-                        // Handle like action
+                        postController.addLike(post: post)
                     }) {
                         Image(systemName: "heart")
                             .resizable()
@@ -71,7 +74,7 @@ struct PostDetailView: View {
                     Spacer()
                     
                     Button(action: {
-                        // Handle comment action
+                        postController.addComment(post: post, comment: "Comment")
                     }) {
                         Image(systemName: "bubble.left")
                             .resizable()
