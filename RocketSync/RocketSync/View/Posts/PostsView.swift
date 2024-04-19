@@ -28,6 +28,9 @@ struct PostsView: View {
         .onAppear {
             posts = postController.getAllPosts()
         }
+        .refreshable {
+            posts = postController.getAllPosts()
+        }
     }
 }
 

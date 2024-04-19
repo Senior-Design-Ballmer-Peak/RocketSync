@@ -116,5 +116,5 @@ struct PostDetailView: View {
 }
 
 #Preview {
-    PostDetailView(post: Post(id: "", title: "Preview", type: "Design", user: "teckenrod", likes: 3, commentText: ["nice", "looks good"], commentUsers: ["teckenrod", "tpawlenty"]), expanded: true)
+    PostDetailView(post: Post(id: "", title: "Preview", type: "Design", text: "Text", user: "teckenrod", likes: 3, commentText: ["nice", "looks good"], commentUsers: ["teckenrod", "tpawlenty"]), expanded: true)
 }
