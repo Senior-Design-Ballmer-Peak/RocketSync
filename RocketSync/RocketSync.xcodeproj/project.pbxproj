@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5D03D9A22BC6D58700853EF7 /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03D9A12BC6D58700853EF7 /* LaunchController.swift */; };
 		5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DF1172BA783AA001F5F59 /* PostOptions.swift */; };
+		5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */; };
 		5D483FD62BC4C9B6006A8C1B /* FetchModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D483FD52BC4C9B6006A8C1B /* FetchModelView.swift */; };
 		5DDE50F32BC235780004CB0C /* ARWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F22BC235780004CB0C /* ARWrapper.swift */; };
 		5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */; };
@@ -28,7 +29,7 @@
 		5DF640DE2BA4AD2E00B160CD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640DD2BA4AD2E00B160CD /* LoginView.swift */; };
 		5DF640E12BA4AD5700B160CD /* DistanceMeasureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E02BA4AD5700B160CD /* DistanceMeasureView.swift */; };
 		5DF640E32BA4AD7400B160CD /* DeviceConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E22BA4AD7400B160CD /* DeviceConnectionView.swift */; };
-		5DF640E52BA4AD8800B160CD /* DeviceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E42BA4AD8800B160CD /* DeviceDetailView.swift */; };
+		5DF640E52BA4AD8800B160CD /* LaunchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E42BA4AD8800B160CD /* LaunchDashboardView.swift */; };
 		5DF640E82BA4ADE800B160CD /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E72BA4ADE800B160CD /* PostsView.swift */; };
 		5DF640EA2BA4ADF200B160CD /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E92BA4ADF200B160CD /* PostDetailView.swift */; };
 		5DF640EC2BA4AE0000B160CD /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		5D03D9A12BC6D58700853EF7 /* LaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchController.swift; sourceTree = "<group>"; };
 		5D0DF1172BA783AA001F5F59 /* PostOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptions.swift; sourceTree = "<group>"; };
+		5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndLaunchView.swift; sourceTree = "<group>"; };
 		5D483FD52BC4C9B6006A8C1B /* FetchModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchModelView.swift; sourceTree = "<group>"; };
 		5DDE50F22BC235780004CB0C /* ARWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARWrapper.swift; sourceTree = "<group>"; };
 		5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignPostView.swift; sourceTree = "<group>"; };
@@ -73,7 +75,7 @@
 		5DF640DD2BA4AD2E00B160CD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5DF640E02BA4AD5700B160CD /* DistanceMeasureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceMeasureView.swift; sourceTree = "<group>"; };
 		5DF640E22BA4AD7400B160CD /* DeviceConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionView.swift; sourceTree = "<group>"; };
-		5DF640E42BA4AD8800B160CD /* DeviceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailView.swift; sourceTree = "<group>"; };
+		5DF640E42BA4AD8800B160CD /* LaunchDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDashboardView.swift; sourceTree = "<group>"; };
 		5DF640E72BA4ADE800B160CD /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
 		5DF640E92BA4ADF200B160CD /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
@@ -206,7 +208,8 @@
 			children = (
 				5DF640E02BA4AD5700B160CD /* DistanceMeasureView.swift */,
 				5DF640E22BA4AD7400B160CD /* DeviceConnectionView.swift */,
-				5DF640E42BA4AD8800B160CD /* DeviceDetailView.swift */,
+				5DF640E42BA4AD8800B160CD /* LaunchDashboardView.swift */,
+				5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -318,10 +321,11 @@
 				5D483FD62BC4C9B6006A8C1B /* FetchModelView.swift in Sources */,
 				5DF640BF2BA4A9D100B160CD /* ContentView.swift in Sources */,
 				5DF640DC2BA4AD0C00B160CD /* ProfileView.swift in Sources */,
-				5DF640E52BA4AD8800B160CD /* DeviceDetailView.swift in Sources */,
+				5DF640E52BA4AD8800B160CD /* LaunchDashboardView.swift in Sources */,
 				5DF640EC2BA4AE0000B160CD /* CreatePostView.swift in Sources */,
 				5DF640EE2BA4AE9B00B160CD /* SettingsView.swift in Sources */,
 				5DF640CF2BA4ABB900B160CD /* LoginOptions.swift in Sources */,
+				5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */,
 				5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */,
 				5DF640EA2BA4ADF200B160CD /* PostDetailView.swift in Sources */,
 				5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */,
