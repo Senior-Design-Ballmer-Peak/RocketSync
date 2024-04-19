@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct ProfileView: View {
     var postController: PostsController
+    @State private var isCreatePostViewPresented = false
     @State var selection : Int = 0
     
     var body: some View {
@@ -157,12 +158,23 @@ struct ProfileView: View {
                     Spacer()
                 }
                 
-                NavigationLink(destination: CreatePostView(), label: {
+                Button(action: {
+                    isCreatePostViewPresented.toggle()
+                }) {
                     Text("Create Post")
-                        .padding(.all)
+                        .padding()
                         .foregroundStyle(.tint)
                         .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(.tint, lineWidth: 2))
                         .foregroundColor(Color("TextColor"))
+                }
+                .sheet(isPresented: $isCreatePostViewPresented, content: {
+                    VStack {
+                        CreatePostView()
+                            .padding()
+                            .cornerRadius(20)
+                    }
+                        .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.automatic)
                 })
             }
         }
