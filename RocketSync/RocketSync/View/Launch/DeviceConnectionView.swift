@@ -18,7 +18,7 @@ struct DeviceConnectionView: View {
             List(bluetoothManager.discoveredPeripherals, id: \.identifier) { peripheral in
                 Section {
                     if peripheral.name == "L-TAS" {
-                        NavigationLink(destination: DeviceDetailView(bluetoothManager: bluetoothManager, peripheral: peripheral)) {
+                        NavigationLink(destination: LaunchDashboardView(bluetoothManager: bluetoothManager, peripheral: peripheral)) {
                             Text(peripheral.name ?? "Unknown")
                                 .bold()
                         }
