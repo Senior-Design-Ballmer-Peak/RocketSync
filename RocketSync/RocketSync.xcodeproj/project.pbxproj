@@ -10,10 +10,6 @@
 		5D03D9A22BC6D58700853EF7 /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03D9A12BC6D58700853EF7 /* LaunchController.swift */; };
 		5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DF1172BA783AA001F5F59 /* PostOptions.swift */; };
 		5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */; };
-		5D483FD62BC4C9B6006A8C1B /* FetchModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D483FD52BC4C9B6006A8C1B /* FetchModelView.swift */; };
-		5DDE50F32BC235780004CB0C /* ARWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F22BC235780004CB0C /* ARWrapper.swift */; };
-		5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */; };
-		5DDE50F72BC2381C0004CB0C /* Mesh+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */; };
 		5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE01FA52BB3836000EB100E /* BaseView.swift */; };
 		5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */; };
 		5DF640BF2BA4A9D100B160CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BE2BA4A9D100B160CD /* ContentView.swift */; };
@@ -55,10 +51,6 @@
 		5D03D9A12BC6D58700853EF7 /* LaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchController.swift; sourceTree = "<group>"; };
 		5D0DF1172BA783AA001F5F59 /* PostOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptions.swift; sourceTree = "<group>"; };
 		5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndLaunchView.swift; sourceTree = "<group>"; };
-		5D483FD52BC4C9B6006A8C1B /* FetchModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchModelView.swift; sourceTree = "<group>"; };
-		5DDE50F22BC235780004CB0C /* ARWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARWrapper.swift; sourceTree = "<group>"; };
-		5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignPostView.swift; sourceTree = "<group>"; };
-		5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mesh+Ext.swift"; sourceTree = "<group>"; };
 		5DE01FA52BB3836000EB100E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		5DF640B92BA4A9D100B160CD /* RocketSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RocketSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketSyncApp.swift; sourceTree = "<group>"; };
@@ -188,8 +180,6 @@
 				5DF640D02BA4ABE300B160CD /* Post.swift */,
 				5DF640D22BA4ABFA00B160CD /* DistanceMeasureController.swift */,
 				5DF640D42BA4AC0E00B160CD /* AuthenticationModel.swift */,
-				5DDE50F22BC235780004CB0C /* ARWrapper.swift */,
-				5DDE50F62BC2381C0004CB0C /* Mesh+Ext.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,8 +210,6 @@
 				5DF640E72BA4ADE800B160CD /* PostsView.swift */,
 				5DF640E92BA4ADF200B160CD /* PostDetailView.swift */,
 				5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */,
-				5DDE50F42BC2374A0004CB0C /* DesignPostView.swift */,
-				5D483FD52BC4C9B6006A8C1B /* FetchModelView.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -318,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF640E82BA4ADE800B160CD /* PostsView.swift in Sources */,
-				5D483FD62BC4C9B6006A8C1B /* FetchModelView.swift in Sources */,
 				5DF640BF2BA4A9D100B160CD /* ContentView.swift in Sources */,
 				5DF640DC2BA4AD0C00B160CD /* ProfileView.swift in Sources */,
 				5DF640E52BA4AD8800B160CD /* LaunchDashboardView.swift in Sources */,
@@ -328,19 +315,16 @@
 				5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */,
 				5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */,
 				5DF640EA2BA4ADF200B160CD /* PostDetailView.swift in Sources */,
-				5DDE50F52BC2374A0004CB0C /* DesignPostView.swift in Sources */,
 				5DF640E32BA4AD7400B160CD /* DeviceConnectionView.swift in Sources */,
 				5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */,
 				5DF640D72BA4AC4D00B160CD /* PostsController.swift in Sources */,
 				5DF640D52BA4AC0E00B160CD /* AuthenticationModel.swift in Sources */,
-				5DDE50F72BC2381C0004CB0C /* Mesh+Ext.swift in Sources */,
 				5D03D9A22BC6D58700853EF7 /* LaunchController.swift in Sources */,
 				5DF640D32BA4ABFA00B160CD /* DistanceMeasureController.swift in Sources */,
 				5DF640D92BA4AC5700B160CD /* BluetoothController.swift in Sources */,
 				5DF640E12BA4AD5700B160CD /* DistanceMeasureView.swift in Sources */,
 				5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */,
 				5DF640DE2BA4AD2E00B160CD /* LoginView.swift in Sources */,
-				5DDE50F32BC235780004CB0C /* ARWrapper.swift in Sources */,
 				5DF640D12BA4ABE300B160CD /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
