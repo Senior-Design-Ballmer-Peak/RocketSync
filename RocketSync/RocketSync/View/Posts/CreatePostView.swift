@@ -13,63 +13,31 @@ import FirebaseAuth
 struct CreatePostView: View {
     @State private var postTitle: String = ""
     @State private var postText: String = ""
-    @State private var postType: PostType = .select
+    @State private var postType: PostType = .post
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var postPhoto: Data?
     @Environment(\.presentationMode) var presentationMode
     
     enum PostType: String, CaseIterable, Identifiable {
-        case post, question, design, select
+        case post, question, design
         var id: Self { self }
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-
-                Picker("Type", selection: $postType) {
-                    ForEach(PostType.allCases) { type in
-                        Text(type.rawValue.capitalized)
-                            .foregroundColor(Color("TextColor"))
-                    }
+        VStack(spacing: 20) {
+            Picker("Type", selection: $postType) {
+                ForEach(PostType.allCases) { type in
+                    Text(type.rawValue.capitalized)
+                        .foregroundColor(Color("TextColor"))
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color("TextColor"), lineWidth: 2)
-                )
-                
-                Spacer()
-            }.padding(.top)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.all)
             
-            if postType == .design {
-                
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Title: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Title", text: $postTitle)
-                }.padding(.all)
-                
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Description: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Description", text: $postText)
-                }.padding(.all)
-                
+            switch postType {
+            case .design:
+                PostInputField(title: "Title:", placeholder: "Enter Title", text: $postTitle)
+                PostInputField(title: "Description:", placeholder: "Enter Description", text: $postText)
                 HStack {
                     Image(systemName: "photo")
                         .padding(.leading)
@@ -78,82 +46,31 @@ struct CreatePostView: View {
                         .frame(width: 150, alignment: .leading)
                         .foregroundColor(Color("TextColor"))
                     
-                    PhotosPicker("Add Image", selection: $selectedPhoto,matching: .images, photoLibrary: .shared())
+                    PhotosPicker("Add Image", selection: $selectedPhoto, matching: .images, photoLibrary: .shared())
                         .foregroundColor(Color("TextColor"))
                     
                     Spacer()
                 }.padding(.all)
-                
-            } else if postType == .question {
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Question: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Question", text: $postTitle)
-                }.padding(.all)
-                
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Detail: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Detail", text: $postText)
-                }.padding(.all)
-                
-            } else if postType == .post {
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Title: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Title", text: $postTitle)
-                }.padding(.all)
-                
-                HStack {
-                    Image(systemName: "text.justify")
-                        .padding(.leading)
-                    
-                    Text("Description: ")
-                        .frame(width: 150, alignment: .leading)
-                        .foregroundColor(Color("TextColor"))
-
-                    Spacer()
-                    
-                    TextField("Enter Description", text: $postText)
-                }.padding(.all)
+            case .question:
+                PostInputField(title: "Question:", placeholder: "Enter Question", text: $postTitle)
+                PostInputField(title: "Detail:", placeholder: "Enter Detail", text: $postText)
+            case .post:
+                PostInputField(title: "Title:", placeholder: "Enter Title", text: $postTitle)
+                PostInputField(title: "Description:", placeholder: "Enter Description", text: $postText)
             }
             
             Spacer()
             
-            if postType != .select {
-                Button {
-                    PostsController().addPost(title: postTitle, type: postType.rawValue, text: postText)
-                    self.presentationMode.wrappedValue.dismiss()
-                    
-                } label: {
-                    Image(systemName: "plus.rectangle")
-                        .resizable()
-                        .foregroundColor(Color("TextColor"))
-                        .scaledToFit()
-                        .frame(height: 50)
-                }.padding(.all)
+            Button {
+                addPost()
+            } label: {
+                Image(systemName: "plus.rectangle")
+                    .resizable()
+                    .foregroundColor(Color("TextColor"))
+                    .scaledToFit()
+                    .frame(height: 50)
             }
+            .padding(.all)
         }
         .task(id: selectedPhoto) {
             if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
@@ -161,8 +78,33 @@ struct CreatePostView: View {
             }
         }
     }
+    
+    private func addPost() {
+        PostsController().addPost(title: postTitle, type: postType.rawValue, text: postText)
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    struct PostInputField: View {
+        let title: String
+        let placeholder: String
+        @Binding var text: String
+        
+        var body: some View {
+            HStack {
+                Image(systemName: "text.justify")
+                    .padding(.leading)
+                Text(title)
+                    .frame(width: 150, alignment: .leading)
+                    .foregroundColor(Color("TextColor"))
+                Spacer()
+                TextField(placeholder, text: $text)
+                    .foregroundColor(Color("TextColor"))
+            }
+            .padding(.all)
+        }
+    }
 }
 
-//#Preview {
-//    CreatePostView()
-//}
+#Preview {
+    CreatePostView()
+}
