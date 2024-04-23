@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EndLaunchView: View {
+    var postController: PostsController
+    
 //    var topSpeed: Double
     var topAcc: Double
     var lowTemp: Double

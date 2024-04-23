@@ -11,10 +11,18 @@ import CoreBluetooth
 
 struct LaunchDashboardView: View {
     @ObservedObject var bluetoothManager: BluetoothController
-    @ObservedObject var launchController = LaunchController()
+    var launchController = LaunchController()
+    var postController: PostsController
     @State var stats = [String: Double]()
     @Environment(\.presentationMode) var presentationMode
     var peripheral: CBPeripheral
+    @State private var endLaunchPresented = false
+    
+    @State private var acceleration: Double = 0
+    @State private var altitude: Double = 0
+    @State private var temperature: Double = 0
+    @State private var humidity: Double = 0
+    @State private var pressure: Double = 0
     
     var body: some View {
         VStack {
@@ -28,11 +36,11 @@ struct LaunchDashboardView: View {
             HStack {
                 Spacer()
                 
-                GageView(low: 0, high: 100, value: stats["Acc"] ?? 0, unit: "m/s\u{00B2}", type: "Acceleration")
+                GageView(low: 0, high: 100, value: acceleration, unit: "m/s\u{00B2}", type: "Acceleration")
                 
                 Divider()
                 
-                GageView(low: 0, high: 100, value: stats["Altitude"] ?? 0, unit: "meters", type: "Altitude")
+                GageView(low: 0, high: 100, value: altitude, unit: "meters", type: "Altitude")
                 
                 Spacer()
             }
@@ -42,15 +50,15 @@ struct LaunchDashboardView: View {
             HStack {
                 Spacer()
                 
-                GageView(low: 0, high: 100, value: stats["TempF"] ?? 0, unit: "\u{00B0}F", type: "Temperature")
+                GageView(low: 0, high: 100, value: temperature, unit: "\u{00B0}F", type: "Temperature")
                 
                 Divider()
                 
-                GageView(low: 0, high: 100, value: stats["Humidity"] ?? 0, unit: "%", type: "Humidity")
+                GageView(low: 0, high: 100, value: humidity, unit: "%", type: "Humidity")
                 
                 Divider()
 
-                GageView(low: 900, high: 1100, value: stats["Pressure"] ?? 0, unit: "hPa", type: "Pressure")
+                GageView(low: 900, high: 1100, value: pressure, unit: "hPa", type: "Pressure")
                 
                 Spacer()
             }
@@ -165,6 +173,7 @@ struct LaunchDashboardView: View {
                 Button {
                     if launchController.activeLaunch {
                         launchController.endLaunch()
+                        endLaunchPresented = true
                     } else {
                         bluetoothManager.launch(to: peripheral)
                         launchController.startLaunch()
@@ -187,10 +196,11 @@ struct LaunchDashboardView: View {
             }
         }
         .onReceive(bluetoothManager.$receivedData) { newData in
-            launchController.getData(newData)
-        }
-        .onReceive(launchController.$valuesDict) { updatedValues in
-            stats = updatedValues
+            stats = launchController.getData(newData)
+            if let alt = stats["Altitude"] {
+                print(alt)
+            }
+            updateStats(stats)
         }
         .onAppear {
             bluetoothManager.connect(to: peripheral)
@@ -198,15 +208,56 @@ struct LaunchDashboardView: View {
         .onDisappear(perform: {
             bluetoothManager.disconnect(from: peripheral)
         })
+        .sheet(isPresented: $endLaunchPresented, content: {
+            VStack {
+                EndLaunchView(postController: postController, topAcc: launchController.topAcc, lowTemp: launchController.lowTemp, highTemp: launchController.highTemp, lowHumidity: launchController.lowHumidity, highHumidity: launchController.highHumidity, lowPressure: launchController.lowPressure, highPressure: launchController.highPressure, startLat: launchController.startLat, startLon: launchController.startLon, startAlt: launchController.startAlt, endLat: launchController.endLat, endLon: launchController.endLon, peakAlt: launchController.peakAlt, duration: launchController.duration!)
+                    .padding()
+                    .cornerRadius(20)
+            }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.hidden)
+        })
         .tint(Color("TextColor"))
+    }
+    
+    private func updateStats(_ newData: [String: Double]) {
+        if let acc = newData["Acc"] {
+            acceleration = acc
+        } else {
+            print("No Acc")
+        }
+        
+        if let alt = newData["Altitude"] {
+            altitude = alt
+        } else {
+            print("No Alt")
+        }
+        
+        if let temp = newData["TempF"] {
+            temperature = temp
+        } else {
+            print("No Temp")
+        }
+        
+        if let humid = newData["Humidity"] {
+            humidity = humid
+        } else {
+            print("No Hum")
+        }
+        
+        if let press = newData["Pressure"] {
+            pressure = press
+        } else {
+            print("No Pres")
+        }
     }
 }
 
 struct GageView: View {
-    @State var low: Double
-    @State var high: Double
-    @State var value: Double
-    @State var unit: String
+    var low: Double
+    var high: Double
+    var value: Double
+    var unit: String
     var type: String
     
     var data: [(type: String, amount: Double, color: Double)] {
@@ -238,21 +289,6 @@ struct GageView: View {
                         .foregroundStyle(by: .value("color", dataItem.color))
                 }
                 .chartLegend(.hidden)
-            }
-            .onTapGesture {
-                if type == "Temperature" {
-                    if unit.contains("F") {
-                        high = (100 - 32) * 5/9
-                        low = -32 * 5/9
-                        value = (value - 32) * 5/9
-                        unit = "\u{00B0}C"
-                    } else {
-                        high = 100
-                        low = 0
-                        value = value * 9/5 + 32
-                        unit = "\u{00B0}F"
-                    }
-                }
             }
         }
     }
