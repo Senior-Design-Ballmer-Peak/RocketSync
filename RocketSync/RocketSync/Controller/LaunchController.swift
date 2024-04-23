@@ -8,8 +8,9 @@
 import Foundation
 
 class LaunchController: ObservableObject {
-    @Published var valuesDict = [String: Double]()
+    @Published
     var activeLaunch = false
+    var valuesDict = [String: Double]()
 
     var topAcc: Double = -99999
     var lowTemp: Double = 99999
@@ -31,11 +32,13 @@ class LaunchController: ObservableObject {
     var endLon: Double = 0
     var gainedAlt: Double = 0
     
-    func getData(_ data: String) {
-        var vals = data.split(separator: ", ")
+    func getData(_ data: String) -> [String: Double] {
+        
+        let vals = data.split(separator: ", ")
         for val in vals {
-            var val = val.split(separator: ": ")
-            valuesDict[String(val[0])] = Double(val[1])
+            let val = val.split(separator: ": ")
+            var splitVal = val[1].split(separator: " ")[0]
+            valuesDict[String(val[0])] = Double(splitVal) ?? 0
         }
         
         if let x = valuesDict["AccX"], let y = valuesDict["AccY"], let z = valuesDict["AccZ"] {
@@ -52,6 +55,8 @@ class LaunchController: ObservableObject {
         lowPressure = valuesDict["Pressure"] ?? 99999 < lowPressure ? valuesDict["Pressure"] ?? 99999 : lowPressure
         highPressure = valuesDict["Pressure"] ?? -99999 > highPressure ? valuesDict["Pressure"] ?? -99999 : highPressure
         peakAlt = valuesDict["Altitude"] ?? -99999 > topAcc ? valuesDict["Altitude"] ?? -99999 : peakAlt
+        
+        return valuesDict
     }
     
     func startLaunch() {
