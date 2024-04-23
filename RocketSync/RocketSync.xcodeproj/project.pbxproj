@@ -10,7 +10,6 @@
 		5D03D9A22BC6D58700853EF7 /* LaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03D9A12BC6D58700853EF7 /* LaunchController.swift */; };
 		5D0DF1182BA783AA001F5F59 /* PostOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DF1172BA783AA001F5F59 /* PostOptions.swift */; };
 		5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */; };
-		5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE01FA52BB3836000EB100E /* BaseView.swift */; };
 		5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */; };
 		5DF640BF2BA4A9D100B160CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640BE2BA4A9D100B160CD /* ContentView.swift */; };
 		5DF640C12BA4A9D300B160CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DF640C02BA4A9D300B160CD /* Assets.xcassets */; };
@@ -51,7 +50,6 @@
 		5D03D9A12BC6D58700853EF7 /* LaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchController.swift; sourceTree = "<group>"; };
 		5D0DF1172BA783AA001F5F59 /* PostOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOptions.swift; sourceTree = "<group>"; };
 		5D2D88802BD22F3800DB6991 /* EndLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndLaunchView.swift; sourceTree = "<group>"; };
-		5DE01FA52BB3836000EB100E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		5DF640B92BA4A9D100B160CD /* RocketSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RocketSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF640BC2BA4A9D100B160CD /* RocketSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketSyncApp.swift; sourceTree = "<group>"; };
 		5DF640BE2BA4A9D100B160CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,7 +167,6 @@
 				5DF640DA2BA4ACF700B160CD /* User */,
 				5DF640ED2BA4AE9B00B160CD /* SettingsView.swift */,
 				5DF6410E2BA4B5BD00B160CD /* LaunchScreen.storyboard */,
-				5DE01FA52BB3836000EB100E /* BaseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -323,7 +320,6 @@
 				5DF640D32BA4ABFA00B160CD /* DistanceMeasureController.swift in Sources */,
 				5DF640D92BA4AC5700B160CD /* BluetoothController.swift in Sources */,
 				5DF640E12BA4AD5700B160CD /* DistanceMeasureView.swift in Sources */,
-				5DE01FA62BB3836000EB100E /* BaseView.swift in Sources */,
 				5DF640DE2BA4AD2E00B160CD /* LoginView.swift in Sources */,
 				5DF640D12BA4ABE300B160CD /* Post.swift in Sources */,
 			);
