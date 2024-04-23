@@ -12,6 +12,8 @@ struct PostsView: View {
     @State private var posts: [Post] = []
     @State private var selectedPost: Post?
     @State private var isPostDetailViewPresented = false
+    @State private var presentationDetent: PresentationDetent = .medium
+    @State private var isCreatePostViewPresented = false
 
     
     var body: some View {
@@ -21,6 +23,13 @@ struct PostsView: View {
                     Section {
                         Button {
                             selectedPost = post
+                            
+                            if post.type == "question" {
+                                presentationDetent = .medium
+                            } else {
+                                presentationDetent = .large
+                            }
+                            
                             isPostDetailViewPresented.toggle()
                         } label: {
                             PostDetailView(post: post)
@@ -28,7 +37,25 @@ struct PostsView: View {
                     }
                 }
             }
+            Button(action: {
+                isCreatePostViewPresented.toggle()
+            }) {
+                Text("Create Post")
+                    .padding()
+                    .foregroundStyle(Color("TextColor"))
+                    .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Color("TextColor"), lineWidth: 2))
+            }
+            
         }
+        .sheet(isPresented: $isCreatePostViewPresented, content: {
+            VStack {
+                CreatePostView()
+                    .padding()
+                    .cornerRadius(20)
+            }
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.automatic)
+        })
         .onAppear {
             posts = postController.getAllPosts()
         }
@@ -36,12 +63,11 @@ struct PostsView: View {
             posts = postController.getAllPosts()
         }
         .sheet(isPresented: $isPostDetailViewPresented, content: {
-            VStack {
-                PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: [], commentUsers: []), expanded: true)
-                    .padding()
-                    .cornerRadius(20)
-            }
-            .presentationDetents([.medium, .large])
+            PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: [], commentUsers: []), expanded: true)
+            .cornerRadius(25)
+            .padding(.init(top: 30, leading: 0, bottom: 10, trailing: 0))
+            .presentationDetents([.large, .medium])
+            .presentationDetents([.medium, .large], selection: $presentationDetent)
             .presentationDragIndicator(.automatic)
         })
     }
