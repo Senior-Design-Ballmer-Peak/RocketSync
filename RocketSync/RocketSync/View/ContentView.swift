@@ -22,13 +22,6 @@ struct ContentView: View {
                 LoginView()
             } else {
                 
-                //                    Image(systemName: "location.north")
-                //                        .foregroundColor(Color("TextColor"))
-                //                        .id(titleAppears)
-                //                        .transition(PushTransition(edge: .bottom))
-                //                        .onAppear{ titleAppears.toggle() }
-                //                        .animation(animation, value: titleAppears)
-                
                 TabView(selection: $selectedTab) {
                     PostsView(postController: postController)
                         .tabItem {
@@ -42,7 +35,7 @@ struct ContentView: View {
                         }
                         .tag(1)
                     
-                    DeviceConnectionView()
+                    DeviceConnectionView(postController: postController)
                         .tabItem {
                             Label("L-TAS", systemImage: "location.north.line.fill")
                         }
@@ -53,17 +46,6 @@ struct ContentView: View {
                             Label("Profile", systemImage: "person.fill")
                         }
                         .tag(3)
-//                    
-//                    SettingsView()
-//                        .tabItem {
-//                            Label("Settings", systemImage: "gear")
-//                        }
-//                        .tag(4)
-//                    DesignPostView()
-//                        .tabItem {
-//                            Label("Scan Rocket", systemImage: "laser.burst")
-//                        }
-//                        .tag(5)
                 }
                 .accentColor(Color("TextColor"))
                 .navigationBarTitleDisplayMode(.inline)
@@ -100,6 +82,6 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
