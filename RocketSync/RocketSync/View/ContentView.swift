@@ -68,14 +68,15 @@ struct ContentView: View {
                         
                     },
                     trailing: Button(action: {
-                        
-                    }) {
-                        Image(systemName: "gear")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.primary)
-                            .font(.title)
-                    }
+                        authModel.signOut()
+                    }, label: {
+                        if selectedTab == 3 {
+                            Text("Sign Out")
+                                .foregroundStyle(Color("TextColor"))
+                        } else {
+                            Text("").hidden()
+                        }
+                    }).disabled(selectedTab != 3)
                 )
             }
         }
