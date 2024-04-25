@@ -37,7 +37,7 @@ class LaunchController: ObservableObject {
         let vals = data.split(separator: ", ")
         for val in vals {
             let val = val.split(separator: ": ")
-            var splitVal = val[1].split(separator: " ")[0]
+            let splitVal = val[1].split(separator: " ")[0]
             valuesDict[String(val[0])] = Double(splitVal) ?? 0
         }
         

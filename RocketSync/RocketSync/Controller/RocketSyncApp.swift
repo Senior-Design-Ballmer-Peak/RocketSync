@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Firebase
-import ARKit
 
 @main
 struct RocketSyncApp: App {
