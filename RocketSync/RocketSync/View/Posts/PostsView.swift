@@ -14,45 +14,92 @@ struct PostsView: View {
     @State private var isPostDetailViewPresented = false
     @State private var presentationDetent: PresentationDetent = .medium
     @State private var isCreatePostViewPresented = false
+    @State private var isFilterPresented = false
+    @State private var filterType: FilterType = .all
+    
+    enum FilterType: String, CaseIterable, Identifiable {
+        case post, question, design, launch, all
+        var id: Self { self }
+    }
 
     
     var body: some View {
         ZStack {
-            List {
-                ForEach(posts) { post in
-                    Section {
-                        Button {
-                            selectedPost = post
-                            
-                            if post.type == "question" {
-                                presentationDetent = .medium
-                            } else {
-                                presentationDetent = .large
+            VStack {
+                List {
+                    
+                    HStack {
+                        Picker("Filter", selection: $filterType) {
+                            ForEach(FilterType.allCases) { type in
+                                Text(type.rawValue.capitalized)
+                                    .foregroundColor(Color("TextColor"))
                             }
-                            
-                            isPostDetailViewPresented.toggle()
-                        } label: {
-                            PostDetailView(post: post)
                         }
+                        .pickerStyle(SegmentedPickerStyle())
                     }
-                }
+                    
+                    ForEach(posts) { post in
+                        Section {
+                            Button {
+                                selectedPost = post
+                                
+                                if post.type == "question" {
+                                    presentationDetent = .medium
+                                } else {
+                                    presentationDetent = .large
+                                }
+                                
+                                isPostDetailViewPresented.toggle()
+                            } label: {
+                                PostDetailView(post: post)
+                            }
+                        }
+                        .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(.secondary, lineWidth: 5)
+                        )
+                    }
+                }.listStyle(.inset)
             }
+            
             VStack {
                 Spacer()
                 
-                Button(action: {
-                    isCreatePostViewPresented.toggle()
-                }) {
-                    Text("Create Post")
-                        .padding()
-                        .foregroundStyle(Color("TextColor"))
-                        .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .stroke(Color("TextColor"), lineWidth: 5)
-                                .background(Color("BackgroundColor"))
-                                .opacity(0.8)
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        isCreatePostViewPresented.toggle()
+                    }) {
+                        Text("Create Post")
+                            .padding()
+                            .foregroundStyle(Color("TextColor"))
+                            .background(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .stroke(Color("TextColor"), lineWidth: 5)
+                                    .background(Color("BackgroundColor"))
+                                    .opacity(0.8)
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        isFilterPresented.toggle()
+                    }) {
+                        Text("Filter")
+                            .padding()
+                            .foregroundStyle(Color("TextColor"))
+                            .background(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .stroke(Color("TextColor"), lineWidth: 5)
+                                    .background(Color("BackgroundColor"))
+                                    .opacity(0.8)
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    }
+                    
+                    Spacer()
                 }
             }
         }
