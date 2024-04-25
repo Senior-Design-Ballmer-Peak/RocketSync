@@ -27,7 +27,7 @@ class LaunchController: ObservableObject {
     var startAlt: Double = 0
     
     var endTime: Date?
-    var duration: TimeInterval?
+    var duration: TimeInterval = 0
     var endLat: Double = 0
     var endLon: Double = 0
     var gainedAlt: Double = 0
@@ -36,9 +36,13 @@ class LaunchController: ObservableObject {
         
         let vals = data.split(separator: ", ")
         for val in vals {
-            let val = val.split(separator: ": ")
-            let splitVal = val[1].split(separator: " ")[0]
-            valuesDict[String(val[0])] = Double(splitVal) ?? 0
+            if val.contains(": ") {
+                let val = val.split(separator: ": ")
+                if val.count == 2 && val[1].contains(" ") {
+                    let splitVal = val[1].split(separator: " ")[0]
+                    valuesDict[String(val[0])] = Double(splitVal) ?? 0
+                }
+            }
         }
         
         if let x = valuesDict["AccX"], let y = valuesDict["AccY"], let z = valuesDict["AccZ"] {
@@ -47,14 +51,24 @@ class LaunchController: ObservableObject {
             valuesDict["Acc"] = 0
         }
 
-        topAcc = valuesDict["Acc"] ?? -99999 > topAcc ? valuesDict["Acc"] ?? -99999 : topAcc
-        lowTemp = valuesDict["TempF"] ?? 99999 < lowTemp ? valuesDict["TempF"] ?? 99999 : lowTemp
-        highTemp = valuesDict["TempF"] ?? -99999 > highTemp ? valuesDict["TempF"] ?? -99999 : highTemp
-        lowHumidity = valuesDict["Humidity"] ?? 99999 < lowHumidity ? valuesDict["Humidity"] ?? 99999 : lowHumidity
-        highHumidity = valuesDict["Humidity"] ?? -99999 > highHumidity ? valuesDict["Humidity"] ?? -99999 : highHumidity
-        lowPressure = valuesDict["Pressure"] ?? 99999 < lowPressure ? valuesDict["Pressure"] ?? 99999 : lowPressure
-        highPressure = valuesDict["Pressure"] ?? -99999 > highPressure ? valuesDict["Pressure"] ?? -99999 : highPressure
-        peakAlt = valuesDict["Altitude"] ?? -99999 > topAcc ? valuesDict["Altitude"] ?? -99999 : peakAlt
+        if let acc = valuesDict["Acc"] {
+            topAcc = acc > topAcc ? acc : topAcc
+        }
+        if let temp = valuesDict["TempF"] {
+            lowTemp = temp < lowTemp ? temp : lowTemp
+            highTemp = temp > highTemp ? temp : highTemp
+        }
+        if let hum = valuesDict["Humidity"] {
+            lowHumidity = hum < lowHumidity ? hum : lowHumidity
+            highHumidity = hum > highHumidity ? hum : highHumidity
+        }
+        if let pres = valuesDict["Pressure"] {
+            lowPressure =  pres < lowPressure ? pres : lowPressure
+            highPressure = pres > highPressure ? pres : highPressure
+        }
+        if let alt = valuesDict["Altitude"] {
+            peakAlt = alt > topAcc ? alt : peakAlt
+        }
         
         return valuesDict
     }
