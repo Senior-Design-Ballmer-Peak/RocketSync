@@ -196,10 +196,17 @@ struct LaunchDashboardView: View {
             }
         }
         .onReceive(bluetoothManager.$receivedData) { newData in
+            // DEBUGGING
+            print("New Data: \(newData)")
             stats = launchController.getData(newData)
+            
+            // DEBUGGING
             if let alt = stats["Altitude"] {
-                print(alt)
+                print("Alt: \(alt)")
             }
+            
+            print("----------------------------------------------------")
+            
             updateStats(stats)
         }
         .onAppear {
@@ -210,7 +217,7 @@ struct LaunchDashboardView: View {
         })
         .sheet(isPresented: $endLaunchPresented, content: {
             VStack {
-                EndLaunchView(postController: postController, topAcc: launchController.topAcc, lowTemp: launchController.lowTemp, highTemp: launchController.highTemp, lowHumidity: launchController.lowHumidity, highHumidity: launchController.highHumidity, lowPressure: launchController.lowPressure, highPressure: launchController.highPressure, startLat: launchController.startLat, startLon: launchController.startLon, startAlt: launchController.startAlt, endLat: launchController.endLat, endLon: launchController.endLon, peakAlt: launchController.peakAlt, duration: launchController.duration!)
+                EndLaunchView(postController: postController, topAcc: launchController.topAcc, lowTemp: launchController.lowTemp, highTemp: launchController.highTemp, lowHumidity: launchController.lowHumidity, highHumidity: launchController.highHumidity, lowPressure: launchController.lowPressure, highPressure: launchController.highPressure, startLat: launchController.startLat, startLon: launchController.startLon, startAlt: launchController.startAlt, endLat: launchController.endLat, endLon: launchController.endLon, peakAlt: launchController.peakAlt, duration: launchController.duration)
                     .padding()
                     .cornerRadius(20)
             }
