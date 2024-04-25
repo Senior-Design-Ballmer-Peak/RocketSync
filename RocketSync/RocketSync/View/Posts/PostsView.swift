@@ -17,7 +17,7 @@ struct PostsView: View {
 
     
     var body: some View {
-        VStack {
+        ZStack {
             List {
                 ForEach(posts) { post in
                     Section {
@@ -37,15 +37,24 @@ struct PostsView: View {
                     }
                 }
             }
-            Button(action: {
-                isCreatePostViewPresented.toggle()
-            }) {
-                Text("Create Post")
-                    .padding()
-                    .foregroundStyle(Color("TextColor"))
-                    .background(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Color("TextColor"), lineWidth: 2))
+            VStack {
+                Spacer()
+                
+                Button(action: {
+                    isCreatePostViewPresented.toggle()
+                }) {
+                    Text("Create Post")
+                        .padding()
+                        .foregroundStyle(Color("TextColor"))
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(Color("TextColor"), lineWidth: 5)
+                                .background(Color("BackgroundColor"))
+                                .opacity(0.8)
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                }
             }
-            
         }
         .sheet(isPresented: $isCreatePostViewPresented, content: {
             VStack {
