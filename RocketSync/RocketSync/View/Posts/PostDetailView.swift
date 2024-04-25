@@ -32,19 +32,19 @@ struct PostDetailView: View {
             }
             
             if let imageData = post.photo, let uiImage = UIImage(data: imageData) {
-                
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 300)
                     .clipped()
+                    .padding(.horizontal)
             } else if post.type != "question" {
-                
                 Image("rocket")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 300)
                     .clipped()
+                    .padding(.horizontal)
             }
             
             Text(post.title)
