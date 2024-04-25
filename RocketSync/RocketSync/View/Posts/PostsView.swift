@@ -14,10 +14,9 @@ struct PostsView: View {
     @State private var isPostDetailViewPresented = false
     @State private var presentationDetent: PresentationDetent = .medium
     @State private var isCreatePostViewPresented = false
-    @State private var isFilterPresented = false
     @State private var filterType: FilterType = .all
     
-    enum FilterType: String, CaseIterable, Identifiable {
+    enum FilterType: String, CaseIterable, Identifiable, Equatable {
         case post, question, design, launch, all
         var id: Self { self }
     }
@@ -36,6 +35,10 @@ struct PostsView: View {
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: filterType) { oldValue, newValue in
+                            fetchPosts()
+                        }
+                        
                     }
                     
                     ForEach(posts) { post in
@@ -83,23 +86,6 @@ struct PostsView: View {
                     }
                     
                     Spacer()
-                    
-                    Button(action: {
-                        isFilterPresented.toggle()
-                    }) {
-                        Text("Filter")
-                            .padding()
-                            .foregroundStyle(Color("TextColor"))
-                            .background(
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .stroke(Color("TextColor"), lineWidth: 5)
-                                    .background(Color("BackgroundColor"))
-                                    .opacity(0.8)
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    }
-                    
-                    Spacer()
                 }
             }
         }
@@ -113,10 +99,10 @@ struct PostsView: View {
                 .presentationDragIndicator(.automatic)
         })
         .onAppear {
-            posts = postController.getAllPosts()
+            fetchPosts()
         }
         .refreshable {
-            posts = postController.getAllPosts()
+            fetchPosts()
         }
         .sheet(isPresented: $isPostDetailViewPresented, content: {
             PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: [], commentUsers: []), expanded: true)
@@ -126,6 +112,18 @@ struct PostsView: View {
             .presentationDetents([.medium, .large], selection: $presentationDetent)
             .presentationDragIndicator(.automatic)
         })
+    }
+    
+    func fetchPosts() {
+        postController.getPosts { fetchedPosts in
+            if (filterType.rawValue == "all") {
+                posts = fetchedPosts
+            } else {
+                posts = fetchedPosts.filter { post in
+                    post.type == filterType.rawValue
+                }
+            }
+        }
     }
 }
 
