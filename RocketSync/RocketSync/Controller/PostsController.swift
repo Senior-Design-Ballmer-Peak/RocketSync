@@ -13,31 +13,30 @@ class PostsController: ObservableObject {
     let db = Firestore.firestore()
     @Published var posts: [Post] = []
     
-    func getPosts() {
-        db.collection("Posts").order(by: "type").addSnapshotListener { (querySnapshot, error) in
+    func getPosts(completion: @escaping ([Post]) -> Void) {
+        db.collection("Posts").order(by: "type").getDocuments { (querySnapshot, error) in
             if let e = error {
                 print("Error loading posts: \(e)")
-                return
+                completion([])
             }
             
             var fetchedPosts: [Post] = []
             
-            if let snapshotDocs = querySnapshot?.documents {
-                for doc in snapshotDocs {
-                    let data = doc.data()
-                    if let postTitle = data["title"] as? String,
-                       let postType = data["type"] as? String,
-                       let postUser = data["user"] as? String,
-                       let postLikes = data["likes"] as? Int,
-                       let postCommentText = data["commentText"] as? [String],
-                       let postCommentUsers = data["commentUsers"] as? [String],
-                       let postText = data["text"] as? String {
-                        let newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
-                        fetchedPosts.append(newPost)
-                    }
+
+            for doc in querySnapshot!.documents {
+                let data = doc.data()
+                if let postTitle = data["title"] as? String,
+                   let postType = data["type"] as? String,
+                   let postUser = data["user"] as? String,
+                   let postLikes = data["likes"] as? Int,
+                   let postCommentText = data["commentText"] as? [String],
+                   let postCommentUsers = data["commentUsers"] as? [String],
+                   let postText = data["text"] as? String {
+                    let newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                    fetchedPosts.append(newPost)
                 }
-                self.posts = fetchedPosts.reversed()
             }
+            completion(fetchedPosts.reversed())
         }
     }
     
@@ -80,27 +79,31 @@ class PostsController: ObservableObject {
     
     func getUserPosts(type: String = "all") -> [Post] {
         print("Posts user: \(posts.count)")
-        getPosts()
-        return posts.filter { post in
-            if (type == "all") {
-                post.user == Auth.auth().currentUser?.displayName
-            } else {
-                post.user == Auth.auth().currentUser?.displayName && post.type == type
+        var ps = [Post]()
+        getPosts { fetchedPosts in
+            ps = fetchedPosts.filter { post in
+                if (type == "all") {
+                    post.user == Auth.auth().currentUser?.displayName
+                } else {
+                    post.user == Auth.auth().currentUser?.displayName && post.type == type
+                }
             }
-        }.reversed()
+        }
+        return ps
     }
     
     func getAllPosts(type: String = "all") -> [Post] {
         print("Posts all: \(posts.count)")
-        getPosts()
-        if (type == "all") {
-            return posts.reversed()
-        } else {
-            return posts.filter { post in
-                post.type == type
-            }.reversed()
+        var ps = [Post]()
+        getPosts { fetchedPosts in
+            if (type == "all") {
+                ps = fetchedPosts
+            } else {
+                ps = fetchedPosts.filter { post in
+                    post.type == type
+                }
+            }
         }
+        return ps
     }
-    
-    
 }
