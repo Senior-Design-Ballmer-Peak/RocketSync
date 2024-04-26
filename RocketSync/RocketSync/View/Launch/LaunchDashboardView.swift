@@ -40,7 +40,7 @@ struct LaunchDashboardView: View {
                 
                 Divider()
                 
-                GageView(low: 0, high: 100, value: altitude, unit: "meters", type: "Altitude")
+                GageView(low: 0, high: 500, value: altitude, unit: "meters", type: "Altitude")
                 
                 Spacer()
             }
