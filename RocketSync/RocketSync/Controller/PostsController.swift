@@ -76,34 +76,4 @@ class PostsController: ObservableObject {
         
         print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
     }
-    
-    func getUserPosts(type: String = "all") -> [Post] {
-        print("Posts user: \(posts.count)")
-        var ps = [Post]()
-        getPosts { fetchedPosts in
-            ps = fetchedPosts.filter { post in
-                if (type == "all") {
-                    post.user == Auth.auth().currentUser?.displayName
-                } else {
-                    post.user == Auth.auth().currentUser?.displayName && post.type == type
-                }
-            }
-        }
-        return ps
-    }
-    
-    func getAllPosts(type: String = "all") -> [Post] {
-        print("Posts all: \(posts.count)")
-        var ps = [Post]()
-        getPosts { fetchedPosts in
-            if (type == "all") {
-                ps = fetchedPosts
-            } else {
-                ps = fetchedPosts.filter { post in
-                    post.type == type
-                }
-            }
-        }
-        return ps
-    }
 }
