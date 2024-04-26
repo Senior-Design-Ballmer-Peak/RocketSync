@@ -106,14 +106,6 @@ struct LaunchDashboardView: View {
                             .padding(.bottom)
                     }
                 }
-                    
-                    
-                ZStack {
-                    GridView(dotCoordinates: (25, 25))
-                    
-                    RoundedRectangle(cornerRadius: 100, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 5)
-                        .foregroundStyle(Color("TextColor"))
-                }
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 5)
@@ -174,6 +166,7 @@ struct LaunchDashboardView: View {
                     if launchController.activeLaunch {
                         launchController.endLaunch()
                         endLaunchPresented = true
+                        bluetoothManager.disconnect(from: peripheral)
                     } else {
                         bluetoothManager.launch(to: peripheral)
                         launchController.startLaunch()
@@ -299,41 +292,4 @@ struct GageView: View {
             }
         }
     }
-}
-
-struct GridView: View {
-    let dotCoordinates: (Int, Int)?
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            ForEach(0..<51) { row in
-                HStack(spacing: 0) {
-                    ForEach(0..<51) { column in
-                        if row == dotCoordinates?.0 && column == dotCoordinates?.1 {
-                            Rectangle()
-                                .fill(self.fillColor(row, column))
-                                .frame(width: 5, height: 5)
-                                .overlay(
-                                    Rectangle()
-                                        .fill(Color.red)
-                                        .frame(width: 5, height: 5)
-                                )
-                        } else {
-                            Rectangle()
-                                .fill(self.fillColor(row, column))
-                                .frame(width: 5, height: 5)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    private func fillColor(_ row: Int, _ column: Int) -> Color {
-            if row == 25 || column == 25 {
-                return Color("TextColor")
-            } else {
-                return Color("BackgroundColor")
-            }
-        }
 }
