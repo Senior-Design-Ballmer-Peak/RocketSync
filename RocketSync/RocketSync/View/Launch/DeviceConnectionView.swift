@@ -39,6 +39,9 @@ struct DeviceConnectionView: View {
                 .padding(.vertical)
             }
         }
+        .onChange(of: bluetoothManager.discoveredPeripherals, {
+            getPeripherals()
+        })
         .onAppear {
             getPeripherals()
         }
