@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct EndLaunchView: View {
     var postController: PostsController
     
-//    var topSpeed: Double
     var topAcc: Double
     var lowTemp: Double
     var highTemp: Double
@@ -43,10 +43,22 @@ struct EndLaunchView: View {
         Text("Peak Altitude: \(peakAlt)")
         Text("Flight Duration: \(duration)")
         
+        // Map to find sensor suit
+        
         Button {
             // Create post for launch
         } label: {
             Text("Create Post")
+                .font(.title2)
+                .padding(.all)
+                .foregroundStyle(Color("TextColor"))
+                .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+        }
+        
+        Button {
+            //
+        } label: {
+            Text("Exit")
                 .font(.title2)
                 .padding(.all)
                 .foregroundStyle(Color("TextColor"))
