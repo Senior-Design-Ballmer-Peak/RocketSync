@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
     @State private var titleAppears = false
@@ -41,7 +42,7 @@ struct ContentView: View {
                         }
                         .tag(2)
                     
-                    ProfileView(postController: postController)
+                    ProfileView(postController: postController, userName: Auth.auth().currentUser?.displayName ?? "")
                         .tabItem {
                             Label("Profile", systemImage: "person.fill")
                         }
