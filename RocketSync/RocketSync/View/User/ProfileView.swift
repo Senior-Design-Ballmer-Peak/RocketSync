@@ -6,35 +6,52 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct ProfileView: View {
     var postController: PostsController
     @State var selection : Int = 0
+    @State private var posts: [Post] = []
+    var userName: String
     
     var body: some View {
         NavigationStack {
             VStack {
-                if selection == 0 {
-                    HStack {
+                HStack {
+                    if selection != 0 {
+                        Spacer()
+                    } else {
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
                             .frame(width: 150)
-                            .padding(.all)
+                            .padding(selection == 0 ? .all : .vertical)
                             .foregroundColor(Color("TextColor"))
-                        
-                        VStack {
-                            Text(Auth.auth().currentUser?.displayName ?? "Name")
-                                .fontWeight(.bold)
-                                .foregroundColor(Color("TextColor"))
-                            Text(Auth.auth().currentUser?.email ?? "email")
-                                .fontWeight(.light)
-                                .foregroundColor(Color("TextColor"))
-                        }
-                        
-                        Spacer()
                     }
+                    
+                    Text(userName)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("TextColor"))
+                    
+                    if selection == 1 {
+                        Text("- Posts")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                    } else if selection == 2 {
+                        Text("- Questions")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                    } else if selection == 3 {
+                        Text("- Lauches")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                    }
+                    else if selection == 4 {
+                        Text("- Designs")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                    }
+                    
+                    Spacer()
                 }
                 
                 HStack {
@@ -42,6 +59,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         self.selection = 0
+                        fetchPosts()
                     }, label: {
                         Image(systemName: "figure.stand")
                             .resizable()
@@ -55,6 +73,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         self.selection = 1
+                        fetchPosts(type: "post")
                     }, label: {
                         Image(systemName: "text.bubble")
                             .resizable()
@@ -68,6 +87,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         self.selection = 2
+                        fetchPosts(type: "question")
                     }, label: {
                         Image(systemName: "person.fill.questionmark")
                             .resizable()
@@ -81,6 +101,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         self.selection = 3
+                        fetchPosts(type: "launch")
                     }, label: {
                         Image(systemName: "location.north.line.fill")
                             .resizable()
@@ -94,6 +115,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         self.selection = 4
+                        fetchPosts(type: "design")
                     }, label: {
                         Image(systemName: "scale.3d")
                             .resizable()
@@ -107,61 +129,35 @@ struct ProfileView: View {
                     
                 }.padding(.all)
                 
-                switch selection {
-                case 0:
-                    List {
-                        ForEach(postController.getUserPosts()) { post in
-                            Section {
-                                PostDetailView(post: post, expanded: false)
-                            }
+                List {
+                    ForEach(posts) { post in
+                        Section {
+                            PostDetailView(post: post)
                         }
+                        .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(.secondary, lineWidth: 2)
+                        )
                     }
-                    
-                case 1:
-                    List {
-                        ForEach(postController.getUserPosts(type: "post")) { post in
-                            Section {
-                                PostDetailView(post: post, expanded: false)
-                            }
-                        }
-                    }
-                    
-                case 2:
-                    List {
-                        ForEach(postController.getUserPosts(type: "question")) { post in
-                            Section {
-                                PostDetailView(post: post, expanded: false)
-                            }
-                        }
-                    }
-                    
-                case 3:
-                    List {
-                        ForEach(postController.getUserPosts(type: "launches")) { post in
-                            Section {
-                                PostDetailView(post: post, expanded: false)
-                            }
-                        }
-                    }
-                    
-                case 4:
-                    List {
-                        ForEach(postController.getUserPosts(type: "designs")) { post in
-                            Section {
-                                PostDetailView(post: post, expanded: false)
-                            }
-                        }
-                    }
-                    
-                default:
-                    Spacer()
+                }.listStyle(.inset)
+            }
+        }
+    }
+    
+    func fetchPosts(type: String = "all") {
+        postController.getPosts { fetchedPosts in
+            if (type == "all") {
+                posts = fetchedPosts.filter { post in
+                    post.user == userName
+                }
+            } else {
+                posts = fetchedPosts.filter { post in
+                    post.type == type && post.user == userName
                 }
             }
         }
-        
     }
 }
 
 #Preview {
-    ProfileView(postController: PostsController())
+    ProfileView(postController: PostsController(), userName: "")
 }
