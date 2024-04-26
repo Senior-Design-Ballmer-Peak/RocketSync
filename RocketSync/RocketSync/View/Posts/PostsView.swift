@@ -58,7 +58,7 @@ struct PostsView: View {
                             }
                         }
                         .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(.secondary, lineWidth: 5)
+                            .stroke(.secondary, lineWidth: 2)
                         )
                     }
                 }.listStyle(.inset)
