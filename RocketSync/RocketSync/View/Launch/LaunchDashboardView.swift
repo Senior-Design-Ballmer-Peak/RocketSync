@@ -18,35 +18,19 @@ struct LaunchDashboardView: View {
     var peripheral: CBPeripheral
     @State private var endLaunchPresented = false
     
-    @State private var acceleration: Double = 0
     @State private var altitude: Double = 0
     @State private var temperature: Double = 0
     @State private var humidity: Double = 0
-    @State private var pressure: Double = 0
+    @State private var pressure: Double = 900
     
     var body: some View {
         VStack {
-            Text("\(peripheral.name ?? "Unknown")")
-                .font(.title)
-                .padding(.all)
-                .background(RoundedRectangle(cornerRadius: 50).fill(Color(.background)))
+            Text("L-TAS")
+                .font(.title3)
+                .padding(.horizontal)
             
             Divider()
 
-            HStack {
-                Spacer()
-                
-                GageView(low: 0, high: 100, value: acceleration, unit: "m/s\u{00B2}", type: "Acceleration")
-                
-                Divider()
-                
-                GageView(low: 0, high: 500, value: altitude, unit: "meters", type: "Altitude")
-                
-                Spacer()
-            }
-                
-            Divider()
-            
             HStack {
                 Spacer()
                 
@@ -62,10 +46,68 @@ struct LaunchDashboardView: View {
                 
                 Spacer()
             }
+            
+            Divider()
+            
+            HStack {
+                Spacer()
                 
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        Text("Latitude")
+                            .font(.title3)
+                            .foregroundStyle(Color("TextColor").gradient)
+                        
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                
+                    Text(String(format: "%.2f\u{00B0}", stats["Latitude"] ?? 0))
+                        .bold()
+                        .font(.title2)
+                        .foregroundStyle(Color("TextColor").gradient)
+                    
+                    Spacer()
+                }
+                
+                Divider()
+                
+                GageView(low: 0, high: 500, value: altitude, unit: "meters", type: "Altitude")
+                
+                Divider()
+                
+                VStack {
+                    HStack {
+                        Spacer()
+                        
+                        Text("Longitude")
+                            .font(.title3)
+                            .foregroundStyle(Color("TextColor").gradient)
+        
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                    
+                    Text(String(format: "%.2f\u{00B0}", stats["Longitude"] ?? 0))
+                        .bold()
+                        .font(.title2)
+                        .foregroundStyle(Color("TextColor").gradient)
+
+                    Spacer()
+                }
+                
+                Spacer()
+            }
+            
+            Divider()
+                            
             HStack {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 5)
+                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
                     
                     VStack {
                         Text("Gyro")
@@ -78,7 +120,7 @@ struct LaunchDashboardView: View {
                         
                         Divider()
                         
-                        Text("X")
+                        Text("Roll")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
                         Text(String(format: "%.2f", stats["GyrX"] ?? 0))
@@ -87,7 +129,7 @@ struct LaunchDashboardView: View {
                         
                         Divider()
                         
-                        Text("Y")
+                        Text("Pitch")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
                         Text(String(format: "%.2f", stats["GyrY"] ?? 0))
@@ -97,7 +139,7 @@ struct LaunchDashboardView: View {
                         
                         Divider()
                         
-                        Text("Z")
+                        Text("Yaw")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
                         Text(String(format: "%.2f", stats["GyrZ"] ?? 0))
@@ -108,57 +150,47 @@ struct LaunchDashboardView: View {
                 }
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 5)
+                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
                     
                     VStack {
-                        Text("Mag")
+                        Text("Acceleration")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title2)
                             .padding(.top)
-                        Text("(uT)")
+                        Text("(m/s\u{00B2})")
                             .foregroundStyle(Color("TextColor"))
                             .font(.footnote)
                         
                         Divider()
                         
-                        Text("X")
+                        Text("Lateral")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
-                        Text(String(format: "%.2f", stats["MagX"] ?? 0))
+                        Text(String(format: "%.2f", stats["AccX"] ?? 0))
                             .foregroundStyle(Color("TextColor"))
                             .font(.callout)
                         
                         Divider()
                         
-                        Text("Y")
+                        Text("Longitudinal")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
-                        Text(String(format: "%.2f", stats["MagY"] ?? 0))
+                        Text(String(format: "%.2f", stats["AccY"] ?? 0))
                             .foregroundStyle(Color("TextColor"))
                             .font(.callout)
                         
                         
                         Divider()
                         
-                        Text("Z")
+                        Text("Verticle")
                             .foregroundStyle(Color("TextColor"))
                             .font(.title3)
-                        Text(String(format: "%.2f", stats["MagZ"] ?? 0))
+                        Text(String(format: "%.2f", stats["AccZ"] ?? 0))
                             .foregroundStyle(Color("TextColor"))
                             .font(.callout)
                             .padding(.bottom)
                     }
                 }
-            }
-                
-                
-            HStack {
-                Text("Latitude: \(String(format: "%.2f", stats["Latitude"] ?? 0))")
-                    .foregroundStyle(Color("TextColor"))
-                    .font(.title3)
-                Text("Longitude: \(String(format: "%.2f", stats["Longitude"] ?? 0))")
-                    .foregroundStyle(Color("TextColor"))
-                    .font(.title3)
             }
                 
             HStack {
@@ -177,29 +209,23 @@ struct LaunchDashboardView: View {
                             .font(.title2)
                             .padding(.all)
                             .foregroundStyle(Color("TextColor"))
-                            .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
                     } else {
                         Text("LAUNCH")
                             .font(.title2)
                             .padding(.all)
-                            .foregroundStyle(Color("TextColor"))
-                            .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+                            .foregroundColor(.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.red)
+                                    .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
+                            )
                     }
                 }
             }
         }
         .onReceive(bluetoothManager.$receivedData) { newData in
-            // DEBUGGING
-            print("New Data: \(newData)")
             stats = launchController.getData(newData)
-            
-            // DEBUGGING
-            if let alt = stats["Altitude"] {
-                print("Alt: \(alt)")
-            }
-            
-            print("----------------------------------------------------")
-            
             updateStats(stats)
         }
         .onAppear {
@@ -218,15 +244,10 @@ struct LaunchDashboardView: View {
             .presentationDragIndicator(.hidden)
         })
         .tint(Color("TextColor"))
+        .navigationBarBackButtonHidden(true)
     }
     
     private func updateStats(_ newData: [String: Double]) {
-        if let acc = newData["Acc"] {
-            acceleration = acc
-        } else {
-            print("No Acc")
-        }
-        
         if let alt = newData["Altitude"] {
             altitude = alt
         } else {
@@ -276,7 +297,7 @@ struct GageView: View {
                 VStack {
                     Text(String(format: "%.2f", value))
                         .bold()
-                        .font(.title)
+                        .font(.title2)
                         .foregroundStyle(Color("TextColor").gradient)
                     
                     Text(unit)
