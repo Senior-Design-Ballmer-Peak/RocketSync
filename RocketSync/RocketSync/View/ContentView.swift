@@ -16,6 +16,7 @@ struct ContentView: View {
     @EnvironmentObject var authModel: AuthenticationModel
     var postController = PostsController()
     var hasPersistedSignedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    @State private var isCreatePostViewPresented = false
     
     var body: some View {
         NavigationStack {
@@ -69,18 +70,41 @@ struct ContentView: View {
                         
                     },
                     trailing: Button(action: {
-                        authModel.signOut()
+                        switch(selectedTab) {
+                        case 0:
+                            isCreatePostViewPresented.toggle()
+                        case 3:
+                            authModel.signOut()
+                        default:
+                            print("")
+                        }
+                        
                     }, label: {
-                        if selectedTab == 3 {
+                        switch(selectedTab) {
+                        case 0:
+                            Image(systemName: "plus.bubble")
+                                .foregroundStyle(Color("TextColor"))
+                        case 3:
                             Text("Sign Out")
                                 .foregroundStyle(Color("TextColor"))
-                        } else {
+                        default:
                             Text("").hidden()
                         }
-                    }).disabled(selectedTab != 3)
+                    })
                 )
             }
         }
+        
+        //
+                    
+        //
+        .sheet(isPresented: $isCreatePostViewPresented, content: {
+            CreatePostView()
+                .padding()
+                .cornerRadius(20)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.automatic)
+        })
     }
 }
 

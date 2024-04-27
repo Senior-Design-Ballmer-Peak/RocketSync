@@ -13,7 +13,6 @@ struct PostsView: View {
     @State private var selectedPost: Post?
     @State private var isPostDetailViewPresented = false
     @State private var presentationDetent: PresentationDetent = .medium
-    @State private var isCreatePostViewPresented = false
     @State private var filterType: FilterType = .all
     
     enum FilterType: String, CaseIterable, Identifiable, Equatable {
@@ -63,41 +62,7 @@ struct PostsView: View {
                     }
                 }.listStyle(.inset)
             }
-            
-            VStack {
-                Spacer()
-                
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        isCreatePostViewPresented.toggle()
-                    }) {
-                        Text("Create Post")
-                            .padding()
-                            .foregroundStyle(Color("TextColor"))
-                            .background(
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .stroke(Color("TextColor"), lineWidth: 5)
-                                    .background(Color("BackgroundColor"))
-                                    .opacity(0.8)
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    }
-                    
-                    Spacer()
-                }
-            }
         }
-        .sheet(isPresented: $isCreatePostViewPresented, content: {
-            VStack {
-                CreatePostView()
-                    .padding()
-                    .cornerRadius(20)
-            }
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.automatic)
-        })
         .onAppear {
             fetchPosts()
         }
