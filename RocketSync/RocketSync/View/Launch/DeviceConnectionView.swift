@@ -35,7 +35,6 @@ struct DeviceConnectionView: View {
                     }
                     .listRowBackground(Color.blue.opacity(0.1))
                 }
-                .listStyle(GroupedListStyle())
                 .padding(.vertical)
             }
         }
