@@ -138,7 +138,21 @@ struct ProfileView: View {
                             .stroke(.secondary, lineWidth: 2)
                         )
                     }
-                }.listStyle(.inset)
+                }
+                .listStyle(.inset)
+                .refreshable {
+                    if selection == 1 {
+                        fetchPosts(type: "post")
+                    } else if selection == 2 {
+                        fetchPosts(type: "question")
+                    } else if selection == 3 {
+                        fetchPosts(type: "launch")
+                    } else if selection == 4 {
+                        fetchPosts(type: "design")
+                    } else {
+                        fetchPosts()
+                    }
+                }
             }
         }
     }
@@ -159,5 +173,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(postController: PostsController(), userName: "")
+    ProfileView(postController: PostsController(), userName: "Trey Eckenrod")
 }
