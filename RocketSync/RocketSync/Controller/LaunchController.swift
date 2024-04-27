@@ -8,8 +8,7 @@
 import Foundation
 
 class LaunchController: ObservableObject {
-    @Published
-    var activeLaunch = false
+    @Published var activeLaunch = false
     var valuesDict = [String: Double]()
 
     var topAcc: Double = -99999
@@ -38,9 +37,8 @@ class LaunchController: ObservableObject {
         for val in vals {
             if val.contains(": ") {
                 let val = val.split(separator: ": ")
-                if val.count == 2 && val[1].contains(" ") {
-                    let splitVal = val[1].split(separator: " ")[0]
-                    valuesDict[String(val[0])] = Double(splitVal) ?? 0
+                if val.count == 2 {
+                    valuesDict[String(val[0])] = Double(val[1]) ?? 0
                 }
             }
         }
