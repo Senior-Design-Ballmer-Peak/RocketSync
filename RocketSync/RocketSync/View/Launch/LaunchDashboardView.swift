@@ -17,6 +17,7 @@ struct LaunchDashboardView: View {
     @Environment(\.presentationMode) var presentationMode
     var peripheral: CBPeripheral
     @State private var endLaunchPresented = false
+    @State private var activeLaunch = false
     
     @State private var altitude: Double = 0
     @State private var temperature: Double = 0
@@ -195,16 +196,18 @@ struct LaunchDashboardView: View {
                 
             HStack {
                 Button {
-                    if launchController.activeLaunch {
+                    if activeLaunch {
                         launchController.endLaunch()
-                        endLaunchPresented = true
+                        activeLaunch.toggle()
+                        endLaunchPresented.toggle()
                         bluetoothManager.disconnect(from: peripheral)
                     } else {
                         bluetoothManager.launch(to: peripheral)
+                        activeLaunch.toggle()
                         launchController.startLaunch()
                     }
                 } label: {
-                    if launchController.activeLaunch {
+                    if activeLaunch {
                         Text("LANDED")
                             .font(.title2)
                             .padding(.all)
