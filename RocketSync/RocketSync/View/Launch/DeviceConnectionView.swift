@@ -29,8 +29,14 @@ struct DeviceConnectionView: View {
                 List(peripherals, id: \.identifier) { peripheral in
                     Section {
                         NavigationLink(destination: LaunchDashboardView(bluetoothManager: bluetoothManager, postController: postController, peripheral: peripheral)) {
-                            Text(peripheral.name ?? "Unknown")
-                                .bold()
+                            HStack {
+                                Image(systemName: "location.north.line")
+                                    .foregroundColor(.blue)
+                                    .font(.title)
+                                    .padding(.all)
+                                Text(peripheral.name ?? "Unknown")
+                                    .bold()
+                            }
                         }
                     }
                     .listRowBackground(Color.blue.opacity(0.1))
