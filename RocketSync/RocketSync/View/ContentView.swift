@@ -51,6 +51,7 @@ struct ContentView: View {
                 }
                 .accentColor(Color("TextColor"))
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
                 .navigationBarItems(
                     leading: HStack {
                         Image(systemName: "location.north")
@@ -95,9 +96,6 @@ struct ContentView: View {
             }
         }
         
-        //
-                    
-        //
         .sheet(isPresented: $isCreatePostViewPresented, content: {
             CreatePostView()
                 .padding()

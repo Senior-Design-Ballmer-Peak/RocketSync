@@ -28,7 +28,6 @@
 		5DF640E82BA4ADE800B160CD /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E72BA4ADE800B160CD /* PostsView.swift */; };
 		5DF640EA2BA4ADF200B160CD /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640E92BA4ADF200B160CD /* PostDetailView.swift */; };
 		5DF640EC2BA4AE0000B160CD /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */; };
-		5DF640EE2BA4AE9B00B160CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF640ED2BA4AE9B00B160CD /* SettingsView.swift */; };
 		5DF640F22BA4B06D00B160CD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 5DF640F12BA4B06D00B160CD /* GoogleSignIn */; };
 		5DF640F42BA4B06D00B160CD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DF640F32BA4B06D00B160CD /* GoogleSignInSwift */; };
 		5DF640F72BA4B10900B160CD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5DF640F62BA4B10900B160CD /* FirebaseAuth */; };
@@ -69,7 +68,6 @@
 		5DF640E72BA4ADE800B160CD /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
 		5DF640E92BA4ADF200B160CD /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		5DF640EB2BA4AE0000B160CD /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
-		5DF640ED2BA4AE9B00B160CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5DF640EF2BA4AEDC00B160CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5DF6410C2BA4B13B00B160CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5DF6410E2BA4B5BD00B160CD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				5DF640E62BA4ADD900B160CD /* Posts */,
 				5DF640DF2BA4AD3D00B160CD /* Launch */,
 				5DF640DA2BA4ACF700B160CD /* User */,
-				5DF640ED2BA4AE9B00B160CD /* SettingsView.swift */,
 				5DF6410E2BA4B5BD00B160CD /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -307,7 +304,6 @@
 				5DF640DC2BA4AD0C00B160CD /* ProfileView.swift in Sources */,
 				5DF640E52BA4AD8800B160CD /* LaunchDashboardView.swift in Sources */,
 				5DF640EC2BA4AE0000B160CD /* CreatePostView.swift in Sources */,
-				5DF640EE2BA4AE9B00B160CD /* SettingsView.swift in Sources */,
 				5DF640CF2BA4ABB900B160CD /* LoginOptions.swift in Sources */,
 				5D2D88812BD22F3800DB6991 /* EndLaunchView.swift in Sources */,
 				5DF640BD2BA4A9D100B160CD /* RocketSyncApp.swift in Sources */,
