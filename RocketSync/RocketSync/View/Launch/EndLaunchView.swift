@@ -10,6 +10,7 @@ import MapKit
 
 struct EndLaunchView: View {
     var postController: PostsController
+    @Environment(\.presentationMode) var presentationMode
     
     var topAcc: Double
     var lowTemp: Double
@@ -28,43 +29,44 @@ struct EndLaunchView: View {
     
     
     var body: some View {
-        Text("Top Acceleration: \(topAcc)")
-        Text("Low Temperature: \(lowTemp)")
-        Text("High Temperature: \(highTemp)")
-        Text("Low Humidity: \(lowHumidity)")
-        Text("High Humidity: \(highHumidity)")
-        Text("Low Pressure: \(lowPressure)")
-        Text("High Pressure: \(highPressure)")
-        Text("Starting Longitude: \(startLon)")
-        Text("Starting Latitude: \(startLat)")
-        Text("Starting Altitude: \(startAlt)")
-        Text("Ending Longitude: \(endLon)")
-        Text("Ending Latitude: \(endLat)")
-        Text("Peak Altitude: \(peakAlt)")
-        Text("Flight Duration: \(duration)")
-        
-        // Map to find sensor suit
-        
-        Button {
-            // Create post for launch
-        } label: {
-            Text("Create Post")
-                .font(.title2)
-                .padding(.all)
-                .foregroundStyle(Color("TextColor"))
-                .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+        VStack {
+            Text("Top Acceleration: \(topAcc)")
+            Text("Low Temperature: \(lowTemp)")
+            Text("High Temperature: \(highTemp)")
+            Text("Low Humidity: \(lowHumidity)")
+            Text("High Humidity: \(highHumidity)")
+            Text("Low Pressure: \(lowPressure)")
+            Text("High Pressure: \(highPressure)")
+            Text("Starting Longitude: \(startLon)")
+            Text("Starting Latitude: \(startLat)")
+            Text("Starting Altitude: \(startAlt)")
+            Text("Ending Longitude: \(endLon)")
+            Text("Ending Latitude: \(endLat)")
+            Text("Peak Altitude: \(peakAlt)")
+            Text("Flight Duration: \(duration)")
+            
+            // Map to find sensor suit
+            
+            Button {
+                // Create post for launch
+            } label: {
+                Text("Create Post")
+                    .font(.title2)
+                    .padding(.all)
+                    .foregroundStyle(Color("TextColor"))
+                    .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+            }
+            
+            Button {
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Text("Exit")
+                    .font(.title2)
+                    .padding(.all)
+                    .foregroundStyle(Color("TextColor"))
+                    .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+            }
         }
-        
-        Button {
-            //
-        } label: {
-            Text("Exit")
-                .font(.title2)
-                .padding(.all)
-                .foregroundStyle(Color("TextColor"))
-                .background(RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
-        }
-
     }
 }
 
