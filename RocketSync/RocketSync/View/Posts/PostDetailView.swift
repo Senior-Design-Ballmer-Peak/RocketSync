@@ -11,7 +11,8 @@ struct PostDetailView: View {
     @StateObject private var postController = PostsController()
     var post: Post
     var expanded = false
-    
+    @State private var imageData: Data?
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -31,20 +32,18 @@ struct PostDetailView: View {
                     .foregroundColor(Color("TextColor"))
             }
             
-            if let imageData = post.photo, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 300)
-                    .clipped()
-                    .padding(.horizontal)
-            } else if post.type == "launch" {
-                Image("rocket")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 300)
-                    .clipped()
-                    .padding(.horizontal)
+            if post.type == "design", let photoURL = post.photoURL {
+                if let imageData = imageData {
+                    ImageView(imageData: imageData)
+                        .padding(.horizontal)
+                } else {
+                    ProgressView() 
+                        .onAppear {
+                            postController.fetchImage(from: photoURL) { data in
+                                self.imageData = data
+                            }
+                        }
+                }
             }
             
             Text(post.title)
@@ -115,6 +114,16 @@ struct PostDetailView: View {
             }
         }
         .padding(.vertical, 8)
+    }
+}
+
+struct ImageView: View {
+    let imageData: Data
+    
+    var body: some View {
+        Image(uiImage: UIImage(data: imageData) ?? UIImage())
+            .resizable()
+            .aspectRatio(contentMode: .fit)
     }
 }
 

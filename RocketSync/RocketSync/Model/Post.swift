@@ -13,7 +13,7 @@ struct Post: Identifiable, Hashable {
     var title: String
     var type: String
     var text: String
-    var photo: Data?
+    var photoURL: String?
     var user: String
     var likes: Int
     var commentText: [String]

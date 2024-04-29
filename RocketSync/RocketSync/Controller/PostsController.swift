@@ -8,9 +8,12 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseStorage
 
 class PostsController: ObservableObject {
     let db = Firestore.firestore()
+    let storage = Storage.storage()
+    
     @Published var posts: [Post] = []
     
     func getPosts(completion: @escaping ([Post]) -> Void) {
@@ -32,7 +35,12 @@ class PostsController: ObservableObject {
                    let postCommentText = data["commentText"] as? [String],
                    let postCommentUsers = data["commentUsers"] as? [String],
                    let postText = data["text"] as? String {
-                    let newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                    var newPost: Post
+                    if let photURL = data["photoURL"] as? String {
+                        newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, photoURL: photURL, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                    } else {
+                        newPost = Post(id: doc.documentID, title: postTitle, type: postType, text: postText, user: postUser, likes: postLikes, commentText: postCommentText, commentUsers: postCommentUsers)
+                    }
                     fetchedPosts.append(newPost)
                 }
             }
@@ -60,6 +68,50 @@ class PostsController: ObservableObject {
         }
     }
     
+    func addPostWithPhoto(title: String, type: String, text: String, image: UIImage) {
+        let photoFilename = UUID().uuidString + ".jpg"
+        let photoRef = storage.reference().child("photos/\(photoFilename)")
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            print("Failed to convert image to data")
+            return
+        }
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        let _ = photoRef.putData(imageData, metadata: metadata) { (metadata, error) in
+            guard let _ = metadata else {
+                print("Error uploading photo: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            let photoURL = photoRef.fullPath
+            self.addPost(title: title, type: type, text: text, photoURL: photoURL)
+        }
+    }
+    
+    private func addPost(title: String, type: String, text: String, photoURL: String?) {
+        var doc: [String: Any] = [
+            "title": title,
+            "text": text,
+            "type": type,
+            "user": Auth.auth().currentUser?.displayName ?? "",
+            "likes": 0,
+            "commentText": [],
+            "commentUsers": []
+        ]
+        
+        if let photoURL = photoURL {
+            doc["photoURL"] = photoURL
+        }
+        
+        db.collection("Posts").addDocument(data: doc) { err in
+            if let e = err {
+                print("Error adding post: \(e)")
+            } else {
+                print("Successfully added post")
+            }
+        }
+    }
+    
     func addLike(post: Post) {
         let dbPost = db.collection("Posts").document(post.id)
         dbPost.updateData(["likes": post.likes + 1])
@@ -75,5 +127,19 @@ class PostsController: ObservableObject {
         dbPost.updateData(["commentUser": users.append(Auth.auth().currentUser?.displayName ?? "Anonomous") ])
         
         print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
+    }
+    
+    func fetchImage(from imageURL: String, completion: @escaping (Data?) -> Void) {
+        let storageRef = storage.reference(forURL: "gs://rocketsync-f1499.appspot.com/" + imageURL)
+        
+        let maxSizeBytes: Int64 = 5 * 1024 * 1024
+        storageRef.getData(maxSize: maxSizeBytes) { data, error in
+            if let error = error {
+                print("Error downloading image from \(imageURL): \(error.localizedDescription)")
+                completion(nil)
+            } else {
+                completion(data)
+            }
+        }
     }
 }

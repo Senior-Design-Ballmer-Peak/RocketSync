@@ -62,7 +62,7 @@ struct CreatePostView: View {
             Spacer()
             
             Button {
-                addPost()
+                addPostAction()
             } label: {
                 Image(systemName: "plus.rectangle")
                     .resizable()
@@ -79,8 +79,18 @@ struct CreatePostView: View {
         }
     }
     
-    private func addPost() {
-        PostsController().addPost(title: postTitle, type: postType.rawValue, text: postText)
+    private func addPostAction() {
+        Task {
+            await addPost()
+        }
+    }
+    
+    private func addPost() async {
+        if postType == .design, let data = try? await selectedPhoto?.loadTransferable(type: Data.self), let image = UIImage(data: data) {
+            PostsController().addPostWithPhoto(title: postTitle, type: postType.rawValue, text: postText, image: image)
+        } else {
+            PostsController().addPost(title: postTitle, type: postType.rawValue, text: postText)
+        }
         self.presentationMode.wrappedValue.dismiss()
     }
     
