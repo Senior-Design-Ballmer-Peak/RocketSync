@@ -16,7 +16,7 @@ struct LaunchDashboardView: View {
     @State var stats = [String: Double]()
     @Environment(\.presentationMode) var presentationMode
     var peripheral: CBPeripheral
-    @State private var endLaunchPresented = false
+    @State private var endLaunch = false
     @State private var activeLaunch = false
     
     @State private var altitude: Double = 0
@@ -24,230 +24,227 @@ struct LaunchDashboardView: View {
     @State private var humidity: Double = 0
     @State private var pressure: Double = 900
     
+    @State private var finalStats = [String:Double]()
+    
     var body: some View {
-        VStack {
-            Text("L-TAS")
-                .font(.title3)
-                .padding(.horizontal)
-            
-            Divider()
-
-            HStack {
-                Spacer()
-                
-                GageView(low: 0, high: 100, value: temperature, unit: "\u{00B0}F", type: "Temperature")
-                
-                Divider()
-                
-                GageView(low: 0, high: 100, value: humidity, unit: "%", type: "Humidity")
-                
-                Divider()
-
-                GageView(low: 900, high: 1100, value: pressure, unit: "hPa", type: "Pressure")
-                
-                Spacer()
-            }
-            
-            Divider()
-            
-            HStack {
-                Spacer()
-                
-                VStack {
-                    HStack {
-                        Spacer()
-                        
-                        Text("Latitude")
-                            .font(.title3)
-                            .foregroundStyle(Color("TextColor").gradient)
-                        
-                        Spacer()
-                    }
-                    
-                    Spacer()
-                
-                    Text(String(format: "%.2f\u{00B0}", stats["Latitude"] ?? 0))
-                        .bold()
-                        .font(.title2)
-                        .foregroundStyle(Color("TextColor").gradient)
-                    
-                    Spacer()
-                }
-                
-                Divider()
-                
-                GageView(low: 0, high: 500, value: altitude, unit: "meters", type: "Altitude")
-                
-                Divider()
-                
-                VStack {
-                    HStack {
-                        Spacer()
-                        
-                        Text("Longitude")
-                            .font(.title3)
-                            .foregroundStyle(Color("TextColor").gradient)
-        
-                        Spacer()
-                    }
-                    
-                    Spacer()
-                    
-                    Text(String(format: "%.2f\u{00B0}", stats["Longitude"] ?? 0))
-                        .bold()
-                        .font(.title2)
-                        .foregroundStyle(Color("TextColor").gradient)
-
-                    Spacer()
-                }
-                
-                Spacer()
-            }
-            
-            Divider()
-                            
-            HStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
-                    
-                    VStack {
-                        Text("Gyro")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title2)
-                            .padding(.top)
-                        Text("(deg/s)")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.footnote)
-                        
-                        Divider()
-                        
-                        Text("Roll")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["GyrX"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                        
-                        Divider()
-                        
-                        Text("Pitch")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["GyrY"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                        
-                        
-                        Divider()
-                        
-                        Text("Yaw")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["GyrZ"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                            .padding(.bottom)
-                    }
-                }
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
-                    
-                    VStack {
-                        Text("Acceleration")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title2)
-                            .padding(.top)
-                        Text("(m/s\u{00B2})")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.footnote)
-                        
-                        Divider()
-                        
-                        Text("Lateral")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["AccX"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                        
-                        Divider()
-                        
-                        Text("Longitudinal")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["AccY"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                        
-                        
-                        Divider()
-                        
-                        Text("Verticle")
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.title3)
-                        Text(String(format: "%.2f", stats["AccZ"] ?? 0))
-                            .foregroundStyle(Color("TextColor"))
-                            .font(.callout)
-                            .padding(.bottom)
-                    }
-                }
-            }
-                
-            HStack {
-                Button {
-                    if activeLaunch {
-                        launchController.endLaunch()
-                        activeLaunch.toggle()
-                        endLaunchPresented.toggle()
-                        bluetoothManager.disconnect(from: peripheral)
-                    } else {
-                        bluetoothManager.launch(to: peripheral)
-                        activeLaunch.toggle()
-                        launchController.startLaunch()
-                    }
-                } label: {
-                    if activeLaunch {
-                        Text("LANDED")
-                            .font(.title2)
-                            .padding(.all)
-                            .foregroundStyle(Color("TextColor"))
-                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
-                    } else {
-                        Text("LAUNCH")
-                            .font(.title2)
-                            .padding(.all)
-                            .foregroundColor(.white)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.red)
-                                    .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
-                            )
-                    }
-                }
-            }
-        }
-        .onReceive(bluetoothManager.$receivedData) { newData in
-            stats = launchController.getData(newData)
-            updateStats(stats)
-        }
-        .onAppear {
-            bluetoothManager.connect(to: peripheral)
-        }
-        .onDisappear(perform: {
-            bluetoothManager.disconnect(from: peripheral)
-        })
-        .sheet(isPresented: $endLaunchPresented, content: {
+        if endLaunch {
+            EndLaunchView(postController: postController, finalStats: finalStats)
+        } else {
             VStack {
-                EndLaunchView(postController: postController, topAcc: launchController.topAcc, lowTemp: launchController.lowTemp, highTemp: launchController.highTemp, lowHumidity: launchController.lowHumidity, highHumidity: launchController.highHumidity, lowPressure: launchController.lowPressure, highPressure: launchController.highPressure, startLat: launchController.startLat, startLon: launchController.startLon, startAlt: launchController.startAlt, endLat: launchController.endLat, endLon: launchController.endLon, peakAlt: launchController.peakAlt, duration: launchController.duration)
-                    .padding()
-                    .cornerRadius(20)
+                Text("L-TAS")
+                    .font(.title3)
+                    .padding(.horizontal)
+                
+                Divider()
+                
+                HStack {
+                    Spacer()
+                    
+                    GageView(low: 0, high: 100, value: temperature, unit: "\u{00B0}F", type: "Temperature")
+                    
+                    Divider()
+                    
+                    GageView(low: 0, high: 100, value: humidity, unit: "%", type: "Humidity")
+                    
+                    Divider()
+                    
+                    GageView(low: 900, high: 1100, value: pressure, unit: "hPa", type: "Pressure")
+                    
+                    Spacer()
+                }
+                
+                Divider()
+                
+                HStack {
+                    Spacer()
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            
+                            Text("Latitude")
+                                .font(.title3)
+                                .foregroundStyle(Color("TextColor").gradient)
+                            
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                        
+                        Text(String(format: "%.2f\u{00B0}", stats["Latitude"] ?? 0))
+                            .bold()
+                            .font(.title2)
+                            .foregroundStyle(Color("TextColor").gradient)
+                        
+                        Spacer()
+                    }
+                    
+                    Divider()
+                    
+                    GageView(low: 0, high: 500, value: altitude, unit: "meters", type: "Altitude")
+                    
+                    Divider()
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            
+                            Text("Longitude")
+                                .font(.title3)
+                                .foregroundStyle(Color("TextColor").gradient)
+                            
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                        
+                        Text(String(format: "%.2f\u{00B0}", stats["Longitude"] ?? 0))
+                            .bold()
+                            .font(.title2)
+                            .foregroundStyle(Color("TextColor").gradient)
+                        
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                }
+                
+                Divider()
+                
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
+                        
+                        VStack {
+                            Text("Gyro")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title2)
+                                .padding(.top)
+                            Text("(deg/s)")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.footnote)
+                            
+                            Divider()
+                            
+                            Text("Roll")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["GyrX"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                            
+                            Divider()
+                            
+                            Text("Pitch")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["GyrY"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                            
+                            
+                            Divider()
+                            
+                            Text("Yaw")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["GyrZ"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                                .padding(.bottom)
+                        }
+                    }
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 5, style: .continuous).stroke(Color("TextColor").gradient, lineWidth: 2)
+                        
+                        VStack {
+                            Text("Acceleration")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title2)
+                                .padding(.top)
+                            Text("(m/s\u{00B2})")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.footnote)
+                            
+                            Divider()
+                            
+                            Text("Lateral")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["AccX"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                            
+                            Divider()
+                            
+                            Text("Longitudinal")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["AccY"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                            
+                            
+                            Divider()
+                            
+                            Text("Vertical")
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.title3)
+                            Text(String(format: "%.2f", stats["AccZ"] ?? 0))
+                                .foregroundStyle(Color("TextColor"))
+                                .font(.callout)
+                                .padding(.bottom)
+                        }
+                    }
+                }
+                
+                HStack {
+                    Button {
+                        if activeLaunch {
+                            launchController.endLaunch()
+                            activeLaunch.toggle()
+                            endLaunch.toggle()
+                            bluetoothManager.disconnect(from: peripheral)
+                        } else {
+                            bluetoothManager.launch(to: peripheral)
+                            activeLaunch.toggle()
+                            launchController.startLaunch()
+                        }
+                    } label: {
+                        if activeLaunch {
+                            Text("LANDED")
+                                .font(.title2)
+                                .padding(.all)
+                                .foregroundStyle(Color("TextColor"))
+                                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color("TextColor"), lineWidth: 5))
+                        } else {
+                            Text("LAUNCH")
+                                .font(.title2)
+                                .padding(.all)
+                                .foregroundColor(.white)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.red)
+                                        .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 2)
+                                )
+                        }
+                    }
+                }
             }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.hidden)
-        })
-        .tint(Color("TextColor"))
-        .navigationBarBackButtonHidden(true)
+            .onReceive(bluetoothManager.$receivedData) { newData in
+                stats = launchController.getData(newData)
+                updateStats(stats)
+            }
+            .onAppear {
+                bluetoothManager.connect(to: peripheral)
+            }
+            .onDisappear(perform: {
+                bluetoothManager.disconnect(from: peripheral)
+            })
+            .tint(Color("TextColor"))
+            .navigationBarBackButtonHidden(true)
+        }
     }
     
     private func updateStats(_ newData: [String: Double]) {
@@ -273,6 +270,59 @@ struct LaunchDashboardView: View {
             pressure = press
         } else {
             print("No Pres")
+        }
+        
+        if let acc = finalStats["topAccX"] {
+            finalStats["topAccX"] = max(launchController.topAccX, acc)
+        } else {
+            finalStats["topAccX"] = launchController.topAccX
+        }
+
+        if let acc = finalStats["topAccY"] {
+            finalStats["topAccY"] = max(launchController.topAccY, acc)
+        } else {
+            finalStats["topAccY"] = launchController.topAccY
+        }
+
+        if let acc = finalStats["topAccZ"] {
+            finalStats["topAccZ"] = max(launchController.topAccZ, acc)
+        } else {
+            finalStats["topAccZ"] = launchController.topAccZ
+        }
+        if let acc = finalStats["lowTemp"] {
+            finalStats["lowTemp"] = min(launchController.lowTemp, acc)
+        } else {
+            finalStats["lowTemp"] = launchController.lowTemp
+        }
+        if let acc = finalStats["highTemp"] {
+            finalStats["highTemp"] = max(launchController.highTemp, acc)
+        } else {
+            finalStats["highTemp"] = launchController.highTemp
+        }
+        if let acc = finalStats["lowHumidity"] {
+            finalStats["lowHumidity"] = min(launchController.lowHumidity, acc)
+        } else {
+            finalStats["lowHumidity"] = launchController.lowHumidity
+        }
+        if let acc = finalStats["highHumidity"] {
+            finalStats["highHumidity"] = max(launchController.highHumidity, acc)
+        } else {
+            finalStats["highHumidity"] = launchController.highHumidity
+        }
+        if let acc = finalStats["lowPressure"] {
+            finalStats["lowPressure"] = min(launchController.lowPressure, acc)
+        } else {
+            finalStats["lowPressure"] = launchController.lowPressure
+        }
+        if let acc = finalStats["highPressure"] {
+            finalStats["highPressure"] = max(launchController.highPressure, acc)
+        } else {
+            finalStats["highPressure"] = launchController.highPressure
+        }
+        if let acc = finalStats["peakAlt"] {
+            finalStats["peakAlt"] = max(launchController.peakAlt, acc)
+        } else {
+            finalStats["peakAlt"] = launchController.peakAlt
         }
     }
 }
@@ -317,3 +367,4 @@ struct GageView: View {
         }
     }
 }
+

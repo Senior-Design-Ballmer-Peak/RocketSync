@@ -11,7 +11,9 @@ class LaunchController: ObservableObject {
     @Published var activeLaunch = false
     var valuesDict = [String: Double]()
 
-    var topAcc: Double = -99999
+    @Published var topAccX: Double = -99999
+    var topAccY: Double = -99999
+    var topAccZ: Double = -99999
     var lowTemp: Double = 99999
     var highTemp: Double = -99999
     var lowHumidity: Double = 99999
@@ -32,7 +34,6 @@ class LaunchController: ObservableObject {
     var gainedAlt: Double = 0
     
     func getData(_ data: String) -> [String: Double] {
-        
         let vals = data.split(separator: ", ")
         for val in vals {
             if val.contains(": ") {
@@ -42,15 +43,15 @@ class LaunchController: ObservableObject {
                 }
             }
         }
-        
-        if let x = valuesDict["AccX"], let y = valuesDict["AccY"], let z = valuesDict["AccZ"] {
-            valuesDict["Acc"] = sqrt(x*x + y*y + z*z)
-        } else {
-            valuesDict["Acc"] = 0
-        }
 
-        if let acc = valuesDict["Acc"] {
-            topAcc = acc > topAcc ? acc : topAcc
+        if let acc = valuesDict["AccX"] {
+            topAccX = acc > topAccX ? acc : topAccX
+        }
+        if let acc = valuesDict["AccY"] {
+            topAccY = acc > topAccY ? acc : topAccY
+        }
+        if let acc = valuesDict["AccZ"] {
+            topAccZ = acc > topAccZ ? acc : topAccZ
         }
         if let temp = valuesDict["TempF"] {
             lowTemp = temp < lowTemp ? temp : lowTemp
@@ -65,13 +66,14 @@ class LaunchController: ObservableObject {
             highPressure = pres > highPressure ? pres : highPressure
         }
         if let alt = valuesDict["Altitude"] {
-            peakAlt = alt > topAcc ? alt : peakAlt
+            peakAlt = alt > peakAlt ? alt : peakAlt
         }
         
         return valuesDict
     }
     
     func startLaunch() {
+        print("Launch Started")
         activeLaunch = true
         startTime = Date()
         startLat = valuesDict["Latitude"] ?? 0
@@ -80,8 +82,10 @@ class LaunchController: ObservableObject {
     }
     
     func endLaunch() {
+        print("Launch Ended")
         activeLaunch = false
         endTime = Date()
+        
         if let start = startTime, let end = endTime {
             duration = end.timeIntervalSince(start)
         }
@@ -89,5 +93,8 @@ class LaunchController: ObservableObject {
         endLat = valuesDict["Latitude"] ?? 0
         endLon = valuesDict["Longitude"] ?? 0
         gainedAlt = peakAlt - startAlt
+    }
+    
+    func getFinalStats() {
     }
 }
