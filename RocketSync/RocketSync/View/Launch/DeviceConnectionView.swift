@@ -33,13 +33,18 @@ struct DeviceConnectionView: View {
                                 Image(systemName: "location.north.line")
                                     .foregroundColor(.blue)
                                     .font(.title)
-                                    .padding(.all)
+                                    .padding(.vertical, 50)
+                                    .padding(.trailing, 50)
                                 Text(peripheral.name ?? "Unknown")
                                     .bold()
+                                    .font(.title)
+                                    .padding(.vertical, 50)
                             }
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(10)
                         }
                     }
-                    .listRowBackground(Color.blue.opacity(0.1))
+                    .listRowBackground(Color.gray.opacity(0.1))
                 }
                 .padding(.vertical)
             }
