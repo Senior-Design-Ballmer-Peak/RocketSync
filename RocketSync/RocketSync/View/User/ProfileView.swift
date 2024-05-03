@@ -11,7 +11,14 @@ struct ProfileView: View {
     var postController: PostsController
     @State var selection : Int = 0
     @State private var posts: [Post] = []
+    @State private var selectedPost: Post?
+    @State private var isPostDetailViewPresented = false
+    @State private var presentationDetent: PresentationDetent = .medium
+    @State private var isDeleteAlertPresented = false
+    @State private var postToDelete: Post?
+
     var userName: String
+    var currentUser: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -132,7 +139,29 @@ struct ProfileView: View {
                 List {
                     ForEach(posts) { post in
                         Section {
-                            PostDetailView(post: post)
+                            Button {
+                                selectedPost = post
+                                
+                                if post.type == "question" {
+                                    presentationDetent = .medium
+                                } else {
+                                    presentationDetent = .large
+                                }
+                                
+                                isPostDetailViewPresented.toggle()
+                            } label: {
+                                PostDetailView(post: post)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                if currentUser {
+                                    Button(role: .destructive) {
+                                        postToDelete = post
+                                        isDeleteAlertPresented = true
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
+                            }
                         }
                         .background(RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .stroke(.secondary, lineWidth: 2)
@@ -153,7 +182,34 @@ struct ProfileView: View {
                         fetchPosts()
                     }
                 }
+                .alert(isPresented: $isDeleteAlertPresented) {
+                    Alert(
+                        title: Text("Delete Post"),
+                        message: Text("Are you sure you want to delete this post?"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            // Delete the post from Firebase
+                            if let post = postToDelete {
+                                postController.deletePost(post) { success in
+                                    if success {
+                                        posts.removeAll { $0.id == post.id }
+                                    } else {
+                                        print("Failed to delete post.")
+                                    }
+                                }
+                            }
+                        },
+                        secondaryButton: .cancel(Text("Cancel"))
+                    )
+                }
             }
+            .sheet(isPresented: $isPostDetailViewPresented, content: {
+                PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: "", commentUsers: ""), expanded: true)
+                .cornerRadius(25)
+                .padding(.init(top: 30, leading: 0, bottom: 10, trailing: 0))
+                .presentationDetents([.large, .medium])
+                .presentationDetents([.medium, .large], selection: $presentationDetent)
+                .presentationDragIndicator(.automatic)
+            })
         }
     }
     

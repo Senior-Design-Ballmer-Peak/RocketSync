@@ -12,15 +12,22 @@ struct PostDetailView: View {
     var post: Post
     var expanded = false
     @State private var imageData: Data?
+    @State private var likes: Int = -1
+    @State private var comment = ""
+    @State private var isUserProfilelViewPresented = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(Color("TextColor"))
-                    .padding(.leading)
+                Button(action: {
+                    isUserProfilelViewPresented.toggle()
+                }, label: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(Color("TextColor"))
+                        .padding(.leading)
+                })
                 
                 Text(post.user)
                     .foregroundColor(Color("TextColor"))
@@ -32,18 +39,22 @@ struct PostDetailView: View {
                     .foregroundColor(Color("TextColor"))
             }
             
-            if post.type == "design", let photoURL = post.photoURL {
-                if let imageData = imageData {
-                    ImageView(imageData: imageData)
-                        .padding(.horizontal)
-                } else {
-                    ProgressView() 
-                        .onAppear {
-                            postController.fetchImage(from: photoURL) { data in
-                                self.imageData = data
+            HStack {
+                Spacer()
+                if post.type == "design", let photoURL = post.photoURL {
+                    if let imageData = imageData {
+                        ImageView(imageData: imageData)
+                            .padding(.horizontal)
+                    } else {
+                        ProgressView()
+                            .onAppear {
+                                postController.fetchImage(from: photoURL) { data in
+                                    self.imageData = data
+                                }
                             }
-                        }
+                    }
                 }
+                Spacer()
             }
             
             Text(post.title)
@@ -61,27 +72,37 @@ struct PostDetailView: View {
                     Spacer()
                     Button(action: {
                         postController.addLike(post: post)
+                        likes = post.likes + 1
                     }) {
                         Image(systemName: "heart")
                             .resizable()
                             .frame(width: 20, height: 20)
                             .foregroundColor(Color("TextColor"))
                     }
-                    Text("\(post.likes)")
-                        .foregroundColor(Color("TextColor"))
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        postController.addComment(post: post, comment: "Comment")
-                    }) {
-                        Image(systemName: "bubble.left")
-                            .resizable()
-                            .frame(width: 20, height: 20)
+                    if likes == -1 {
+                        Text("\(post.likes)")
+                            .foregroundColor(Color("TextColor"))
+                    } else {
+                        Text("\(likes)")
                             .foregroundColor(Color("TextColor"))
                     }
                     
-                    Text("\(post.commentText.count)")
+                    Spacer()
+                    
+//                    Button(action: {
+//                        postController.addComment(post: post, comment: "Comment")
+//                    }) {
+//                        Image(systemName: "bubble.left")
+//                            .resizable()
+//                            .frame(width: 20, height: 20)
+//                            .foregroundColor(Color("TextColor"))
+//                    }
+                    
+                    Image(systemName: "bubble.left")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color("TextColor"))
+                    Text("\(post.commentText.split(separator: ":::").count)")
                         .foregroundColor(Color("TextColor"))
 
                     Spacer()
@@ -89,24 +110,48 @@ struct PostDetailView: View {
                 .padding(.horizontal, 16)
                 
                 Divider()
+                
+                HStack {
+                    TextField(text: $comment, prompt: Text("Enter Comment")) {
+                        Image(systemName: "bubble.left")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(Color("TextColor"))
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        postController.addComment(post: post, comment: comment)
+                        comment = ""
+                    }) {
+                        Image(systemName: "arrow.right.square")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color("TextColor"))
+                    }
+                }
+                .padding(.all)
             
                 VStack {
-                    ForEach(Array(zip(post.commentText, post.commentUsers)), id: \.0) { pair in
-                        HStack {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20, alignment: .center)
-                                .foregroundColor(Color("TextColor"))
-                            Text(pair.1)
-                                .foregroundColor(Color("TextColor"))
-                            
-                            Spacer()
-                            
-                            Text(pair.0)
-                                .foregroundColor(Color("TextColor"))
+                    if post.commentText.contains(":::") && post.commentUsers.contains(":::") {
+                        ForEach(Array(zip(post.commentText.split(separator: ":::"), post.commentUsers.split(separator: ":::"))), id: \.0) { pair in
+                            HStack {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height: 20, alignment: .center)
+                                    .foregroundColor(Color("TextColor"))
+                                Text(pair.1)
+                                    .foregroundColor(Color("TextColor"))
+                                
+                                Spacer()
+                                
+                                Text(pair.0)
+                                    .foregroundColor(Color("TextColor"))
+                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
                     }
                 }
                 
@@ -114,6 +159,13 @@ struct PostDetailView: View {
             }
         }
         .padding(.vertical, 8)
+        .sheet(isPresented: $isUserProfilelViewPresented, content: {
+            ProfileView(postController: postController, userName: post.user)
+            .cornerRadius(25)
+            .padding(.init(top: 30, leading: 0, bottom: 10, trailing: 0))
+            .presentationDetents([.large])
+            .presentationDragIndicator(.automatic)
+        })
     }
 }
 
@@ -128,5 +180,5 @@ struct ImageView: View {
 }
 
 #Preview {
-    PostDetailView(post: Post(id: "", title: "Preview", type: "Design", text: "Text", user: "teckenrod", likes: 3, commentText: ["nice", "looks good"], commentUsers: ["teckenrod", "tpawlenty"]), expanded: true)
+    PostDetailView(post: Post(id: "", title: "Preview", type: "Design", text: "Text", user: "teckenrod", likes: 3, commentText: "nice:::looks good", commentUsers: "teckenrod:::tpawlenty"), expanded: true)
 }

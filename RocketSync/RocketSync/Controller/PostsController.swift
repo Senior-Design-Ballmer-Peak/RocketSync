@@ -32,8 +32,8 @@ class PostsController: ObservableObject {
                    let postType = data["type"] as? String,
                    let postUser = data["user"] as? String,
                    let postLikes = data["likes"] as? Int,
-                   let postCommentText = data["commentText"] as? [String],
-                   let postCommentUsers = data["commentUsers"] as? [String],
+                   let postCommentText = data["commentText"] as? String,
+                   let postCommentUsers = data["commentUsers"] as? String,
                    let postText = data["text"] as? String {
                     var newPost: Post
                     if let photURL = data["photoURL"] as? String {
@@ -55,8 +55,8 @@ class PostsController: ObservableObject {
             "type": type,
             "user": Auth.auth().currentUser?.displayName ?? "",
             "likes": 0,
-            "commentText": [],
-            "commentUsers": []
+            "commentText": "",
+            "commentUsers": ""
         ]
         
         db.collection("Posts").addDocument(data: doc) { err in
@@ -95,8 +95,8 @@ class PostsController: ObservableObject {
             "type": type,
             "user": Auth.auth().currentUser?.displayName ?? "",
             "likes": 0,
-            "commentText": [],
-            "commentUsers": []
+            "commentText": "",
+            "commentUsers": ""
         ]
         
         if let photoURL = photoURL {
@@ -112,21 +112,33 @@ class PostsController: ObservableObject {
         }
     }
     
+    func deletePost(_ post: Post, completion: @escaping (Bool) -> Void) {
+        let postRef = db.collection("Posts").document(post.id)
+        
+        postRef.delete { error in
+            if let error = error {
+                print("Error deleting post: \(error)")
+                completion(false)
+            } else {
+                print("Post successfully deleted")
+                completion(true)
+            }
+        }
+    }
+    
     func addLike(post: Post) {
         let dbPost = db.collection("Posts").document(post.id)
         dbPost.updateData(["likes": post.likes + 1])
-        
-        print("\(Auth.auth().currentUser?.displayName ?? "Name") liked the post: \(post.title)")
     }
     
     func addComment(post: Post, comment: String) {
         let dbPost = db.collection("Posts").document(post.id)
-        var comments = post.commentText
         var users = post.commentUsers
-        dbPost.updateData(["commentText": comments.append(comment)])
-        dbPost.updateData(["commentUser": users.append(Auth.auth().currentUser?.displayName ?? "Anonomous") ])
-        
-        print("\(Auth.auth().currentUser?.displayName ?? "Name") commented '\(comment)' on post: \(post.title)")
+        let newUsers = users + ":::\(Auth.auth().currentUser?.displayName ?? "name")"
+        var comments = post.commentText
+        let newComments = comments + ":::\(comment)"
+        dbPost.updateData(["commentUsers": newUsers])
+        dbPost.updateData(["commentText": newComments])
     }
     
     func fetchImage(from imageURL: String, completion: @escaping (Data?) -> Void) {
