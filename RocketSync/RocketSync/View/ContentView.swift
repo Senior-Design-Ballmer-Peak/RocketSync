@@ -43,7 +43,7 @@ struct ContentView: View {
                         }
                         .tag(2)
                     
-                    ProfileView(postController: postController, userName: Auth.auth().currentUser?.displayName ?? "")
+                    ProfileView(postController: postController, userName: Auth.auth().currentUser?.displayName ?? "", currentUser: true)
                         .tabItem {
                             Label("Profile", systemImage: "person.fill")
                         }

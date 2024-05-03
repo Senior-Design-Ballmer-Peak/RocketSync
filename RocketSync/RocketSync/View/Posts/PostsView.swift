@@ -70,7 +70,7 @@ struct PostsView: View {
             fetchPosts()
         }
         .sheet(isPresented: $isPostDetailViewPresented, content: {
-            PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: [], commentUsers: []), expanded: true)
+            PostDetailView(post: selectedPost ?? Post(id: "", title: "", type: "", text: "", user: "", likes: 0, commentText: "", commentUsers: ""), expanded: true)
             .cornerRadius(25)
             .padding(.init(top: 30, leading: 0, bottom: 10, trailing: 0))
             .presentationDetents([.large, .medium])
